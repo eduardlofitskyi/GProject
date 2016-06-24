@@ -12,11 +12,11 @@ import java.sql.SQLException;
 
 public class JdbcRoleDao implements RoleDao{
 
-    private static final String CREATE_SQL = "INSERT INTO ROLES (name) VALUES (?)";
-    private static final String UPDATE_SQL = "UPDATE ROLES SET name = ? WHERE id = ?";
-    private static final String DELETE_SQL = "DELETE FROM ROLES WHERE id = ?";
-    private static final String FIND_BY_NAME_SQL = "SELECT id, name FROM ROLES WHERE name = ?";
-    private static final String FIND_BY_ID_SQL = "SELECT id, name FROM ROLES WHERE id = ?";
+    private static final String CREATE_SQL = "INSERT INTO ROLE (name) VALUES (?)";
+    private static final String UPDATE_SQL = "UPDATE ROLE SET name = ? WHERE id = ?";
+    private static final String DELETE_SQL = "DELETE FROM ROLE WHERE id = ?";
+    private static final String FIND_BY_NAME_SQL = "SELECT id, name FROM ROLE WHERE name = ?";
+    private static final String FIND_BY_ID_SQL = "SELECT id, name FROM ROLE WHERE id = ?";
 
     //TODO make dependency injection
     private AbstractJdbcDao jdbc = new PoolJdbcDao();
@@ -96,6 +96,6 @@ public class JdbcRoleDao implements RoleDao{
         return role;
     }
 
-    private class NoSuchRoleException extends RuntimeException {
+    public class NoSuchRoleException extends RuntimeException {
     }
 }
