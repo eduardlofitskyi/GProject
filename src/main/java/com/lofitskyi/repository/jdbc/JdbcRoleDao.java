@@ -15,7 +15,8 @@ public class JdbcRoleDao implements RoleDao{
     private static final String CREATE_SQL = "INSERT INTO ROLES (name) VALUES (?)";
     private static final String UPDATE_SQL = "UPDATE ROLES SET name = ? WHERE id = ?";
     private static final String DELETE_SQL = "DELETE FROM ROLES WHERE id = ?";
-    private static final String SELECT_SQL = "SELECT id, name FROM ROLES WHERE name = ?";
+    private static final String FIND_BY_NAME_SQL = "SELECT id, name FROM ROLES WHERE name = ?";
+    private static final String FIND_BY_ID_SQL = "SELECT id, name FROM ROLES WHERE name = ?";
 
     //TODO make dependency injection
     private AbstractJdbcDao jdbc = new PoolJdbcDao();
@@ -51,19 +52,45 @@ public class JdbcRoleDao implements RoleDao{
 
     public Role findByName(String name) {
 
+        Role role = null;
+
+        try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_NAME_SQL)){
+            stmt.setString(1, name);
+
+            role = getRoleFromResultSet(stmt);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return role;
+    }
+
+    public Role findById(Long id) {
+
+        Role role = null;
+
+        try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID_SQL)){
+            stmt.setLong(1, id);
+
+            role = getRoleFromResultSet(stmt);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return role;
+    }
+
+    private Role getRoleFromResultSet(PreparedStatement stmt) throws SQLException {
+
         Role role = new Role();
 
-        try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(SELECT_SQL)){
-            stmt.setString(1, name);
-            ResultSet resultSet = stmt.executeQuery();
-
+        try(ResultSet resultSet = stmt.executeQuery()){
             if (!resultSet.next()) throw new NoSuchRoleException();
 
             role.setId(resultSet.getLong("id"));
             role.setName(resultSet.getString("name"));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return role;
