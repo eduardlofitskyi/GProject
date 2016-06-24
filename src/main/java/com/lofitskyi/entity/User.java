@@ -11,21 +11,23 @@ public class User {
     private String firstName;
     private String lastName;
     private Date birthday;
+    private Role role;
 
     //for JPA only
     public User() {
     }
 
-    public User(String login, String password, String email, String firstName, String lastName, Date birthday) {
+    public User(String login, String password, String email, String firstName, String lastName, Date birthday, Role role) {
         this.login = login;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
+        this.role = role;
     }
 
-    public User(Long id, String login, String password, String email, String firstName, String lastName, Date birthday) {
+    public User(Long id, String login, String password, String email, String firstName, String lastName, Date birthday, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -33,6 +35,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
+        this.role = role;
     }
 
     public Long getId() {
@@ -89,5 +92,13 @@ public class User {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
