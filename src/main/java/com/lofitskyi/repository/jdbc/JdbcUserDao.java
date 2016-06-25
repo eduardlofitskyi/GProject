@@ -31,6 +31,13 @@ public class JdbcUserDao implements UserDao{
     //TODO make dependency injection
     private AbstractJdbcDao jdbc = new PoolJdbcDao();
 
+    public JdbcUserDao() {
+    }
+
+    public JdbcUserDao(AbstractJdbcDao jdbc) {
+        this.jdbc = jdbc;
+    }
+
     @Override
     public void create(User user) {
         try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(CREATE_SQL)){
@@ -146,7 +153,7 @@ public class JdbcUserDao implements UserDao{
             if (!resultSet.next()) throw new NoSuchUserException();
 
             user = new User();
-            Role role = new JdbcRoleDao().findById(resultSet.getLong("role_id"));
+            Role role = new JdbcRoleDao(this.jdbc).findById(resultSet.getLong("role_id"));
 
             user.setId(resultSet.getLong("id"));
             user.setLogin(resultSet.getString("login"));
@@ -161,6 +168,6 @@ public class JdbcUserDao implements UserDao{
         return user;
     }
 
-    private class NoSuchUserException extends RuntimeException {
+    public class NoSuchUserException extends RuntimeException {
     }
 }

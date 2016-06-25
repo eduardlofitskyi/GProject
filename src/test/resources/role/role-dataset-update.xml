@@ -1,0 +1,5 @@
+<dataset>
+    <ROLE NAME="super_admin"/>
+    <ROLE NAME="user"/>
+    <ROLE NAME="guest"/>
+</dataset>

@@ -14,13 +14,19 @@ public class JdbcRoleDao implements RoleDao{
 
     private static final String CREATE_SQL = "INSERT INTO ROLE (name) VALUES (?)";
     private static final String UPDATE_SQL = "UPDATE ROLE SET name = ? WHERE id = ?";
-    private static final String DELETE_SQL = "DELETE FROM ROLE WHERE id = ?";
+    private static final String DELETE_SQL = "DELETE FROM ROLE WHERE name = ?";
     private static final String FIND_BY_NAME_SQL = "SELECT id, name FROM ROLE WHERE name = ?";
     private static final String FIND_BY_ID_SQL = "SELECT id, name FROM ROLE WHERE id = ?";
 
     //TODO make dependency injection
     private AbstractJdbcDao jdbc = new PoolJdbcDao();
 
+    public JdbcRoleDao() {
+    }
+
+    public JdbcRoleDao(AbstractJdbcDao jdbc) {
+        this.jdbc = jdbc;
+    }
 
     public void create(Role role) {
         try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(CREATE_SQL)){
@@ -43,7 +49,7 @@ public class JdbcRoleDao implements RoleDao{
 
     public void remove(Role role) {
         try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(DELETE_SQL)){
-            stmt.setLong(1, role.getId());
+            stmt.setString(1, role.getName());
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();

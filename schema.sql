@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS ROLE;
+CREATE TABLE PUBLIC.ROLE
+(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(25)
+);
+
+DROP TABLE IF EXISTS USERS;
+CREATE TABLE PUBLIC.USERS
+(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    login VARCHAR(25),
+    password VARCHAR(25),
+    email VARCHAR(25),
+    first_name VARCHAR(25),
+    last_name VARCHAR(25),
+    birthday DATE,
+    role_id INT,
+    FOREIGN KEY (role_id) REFERENCES PUBLIC.ROLE(id)
+);
