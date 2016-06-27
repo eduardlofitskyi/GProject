@@ -7,4 +7,5 @@
     <USER LOGIN="user1" PASSWORD="pas1" EMAIL="email1" FIRST_NAME="name1" LAST_NAME="surname1" BIRTHDAY="1995-01-01" ROLE_ID="1"/>
     <USER LOGIN="user2" PASSWORD="pas2" EMAIL="email2" FIRST_NAME="name2" LAST_NAME="surname2" BIRTHDAY="1995-01-01" ROLE_ID="1"/>
     <USER LOGIN="user3" PASSWORD="pas3" EMAIL="email3" FIRST_NAME="name3" LAST_NAME="surname3" BIRTHDAY="1995-01-01" ROLE_ID="1"/>
+    <USER LOGIN="new_user" PASSWORD="new_pass" EMAIL="new_email" FIRST_NAME="new_f_name" LAST_NAME="new_surname" BIRTHDAY="1995-01-01" ROLE_ID="1"/>
 </dataset>

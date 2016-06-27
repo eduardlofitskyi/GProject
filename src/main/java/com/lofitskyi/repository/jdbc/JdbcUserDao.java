@@ -15,18 +15,18 @@ import java.util.List;
 
 public class JdbcUserDao implements UserDao{
 
-    private static final String CREATE_SQL = "INSERT INTO USERS " +
+    private static final String CREATE_SQL = "INSERT INTO USER " +
             "(login, password, email, first_name, last_name, birthday, role_id)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String UPDATE_SQL = "UPDATE USERS SET " +
+    private static final String UPDATE_SQL = "UPDATE USER SET " +
             "login = ?, password = ?, email = ?, first_name = ?, last_name = ?, birthday = ?, role_id = ? " +
             "WHERE id = ?";
 
-    private static final String DELETE_SQL = "DELETE FROM USERS WHERE id = ?";
-    private static final String FIND_ALL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USERS";
-    private static final String FIND_BY_LOGIN_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USERS WHERE login = ?";
-    private static final String FIND_BY_EMAIL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USERS WHERE email = ?";
+    private static final String DELETE_SQL = "DELETE FROM USER WHERE login = ?";
+    private static final String FIND_ALL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER";
+    private static final String FIND_BY_LOGIN_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE login = ?";
+    private static final String FIND_BY_EMAIL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE email = ?";
 
     //TODO make dependency injection
     private AbstractJdbcDao jdbc = new PoolJdbcDao();
@@ -74,7 +74,7 @@ public class JdbcUserDao implements UserDao{
     @Override
     public void remove(User user) {
         try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(DELETE_SQL)){
-            stmt.setLong(1, user.getId());
+            stmt.setString(1, user.getLogin());
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class JdbcUserDao implements UserDao{
 
             while (resultSet.next()){
                 User user = new User();
-                Role role = new JdbcRoleDao().findById(resultSet.getLong("role_id"));
+                Role role = new JdbcRoleDao(this.jdbc).findById(resultSet.getLong("role_id"));
 
                 user.setId(resultSet.getLong("id"));
                 user.setLogin(resultSet.getString("login"));

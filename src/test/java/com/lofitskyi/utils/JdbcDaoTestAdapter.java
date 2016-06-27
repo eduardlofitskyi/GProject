@@ -5,11 +5,11 @@ import org.dbunit.IDatabaseTester;
 
 import java.sql.Connection;
 
-public class JdbcDaoAdapter extends AbstractJdbcDao{
+public class JdbcDaoTestAdapter extends AbstractJdbcDao{
 
     private final IDatabaseTester tester;
 
-    public JdbcDaoAdapter(IDatabaseTester tester) {
+    public JdbcDaoTestAdapter(IDatabaseTester tester) {
         this.tester = tester;
     }
 

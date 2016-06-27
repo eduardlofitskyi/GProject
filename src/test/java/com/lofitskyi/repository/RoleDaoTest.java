@@ -2,7 +2,7 @@ package com.lofitskyi.repository;
 
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.repository.jdbc.JdbcRoleDao;
-import com.lofitskyi.utils.JdbcDaoAdapter;
+import com.lofitskyi.utils.JdbcDaoTestAdapter;
 import org.dbunit.Assertion;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
@@ -47,20 +47,20 @@ public class RoleDaoTest {
 
     @Test
     public void shouldFoundRoleByName(){
-        Role role = new JdbcRoleDao(new JdbcDaoAdapter(tester)).findByName("admin");
+        Role role = new JdbcRoleDao(new JdbcDaoTestAdapter(tester)).findByName("admin");
 
         Assert.assertEquals("admin", role.getName());
     }
 
     @Test(expected = JdbcRoleDao.NoSuchRoleException.class)
     public void shouldThrowExceptionWhenTryFoundNotPresentedRole(){
-        new JdbcRoleDao(new JdbcDaoAdapter(tester)).findByName("NINJA");
+        new JdbcRoleDao(new JdbcDaoTestAdapter(tester)).findByName("NINJA");
     }
 
     @Test(expected = JdbcRoleDao.NoSuchRoleException.class)
     public void shouldRemoveRowFromTable(){
         Role role = new Role("admin");
-        dao = new JdbcRoleDao(new JdbcDaoAdapter(tester));
+        dao = new JdbcRoleDao(new JdbcDaoTestAdapter(tester));
 
         dao.remove(role);
         dao.findByName(role.getName());
@@ -69,7 +69,7 @@ public class RoleDaoTest {
     @Test
     public void shouldPersistAndFlushOnCreate() throws Exception {
         Role role = new Role("new_role");
-        dao = new JdbcRoleDao(new JdbcDaoAdapter(tester));
+        dao = new JdbcRoleDao(new JdbcDaoTestAdapter(tester));
 
         dao.create(role);
 
@@ -85,7 +85,7 @@ public class RoleDaoTest {
 
     @Test
     public void shouldUpdateRow() throws Exception {
-        dao = new JdbcRoleDao(new JdbcDaoAdapter(tester));
+        dao = new JdbcRoleDao(new JdbcDaoTestAdapter(tester));
         Role role = dao.findByName("admin");
         role.setName("super_admin");
 
@@ -96,8 +96,6 @@ public class RoleDaoTest {
                         .getResourceAsStream("role/role-dataset-update.xml"));
 
         IDataSet actualData = tester.getConnection().createDataSet();
-
-        System.out.println(dao.findByName("guest").getId());
 
         String[] ignore = {"id"};
         Assertion.assertEqualsIgnoreCols(expectedData, actualData, "ROLE", ignore);
