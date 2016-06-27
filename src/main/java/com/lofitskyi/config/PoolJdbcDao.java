@@ -1,9 +1,7 @@
 package com.lofitskyi.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.core.env.Environment;
 
-import javax.annotation.Resource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
