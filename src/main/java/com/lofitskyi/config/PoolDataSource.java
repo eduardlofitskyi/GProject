@@ -2,7 +2,6 @@ package com.lofitskyi.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class PoolJdbcDao extends AbstractJdbcDao{
+public class PoolDataSource extends AbstractDataSource {
 
     private static BasicDataSource ds;
 
@@ -23,7 +22,7 @@ public class PoolJdbcDao extends AbstractJdbcDao{
             ds = new BasicDataSource();
 
             try {
-                fis = PoolJdbcDao.class.getResourceAsStream("/db.properties");
+                fis = PoolDataSource.class.getResourceAsStream("/db.properties");
                 property.load(fis);
 
                 ds.setUrl(property.getProperty("db.url"));

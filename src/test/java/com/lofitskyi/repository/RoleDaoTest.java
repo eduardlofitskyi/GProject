@@ -2,7 +2,7 @@ package com.lofitskyi.repository;
 
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.repository.jdbc.JdbcRoleDao;
-import com.lofitskyi.utils.JdbcDaoTestAdapter;
+import com.lofitskyi.utils.DataSourceTestAdapter;
 import org.dbunit.Assertion;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
@@ -47,7 +47,7 @@ public class RoleDaoTest {
 
     @Test
     public void shouldFoundRoleByName() throws PersistentException {
-        Role role = new JdbcRoleDao(new JdbcDaoTestAdapter(tester)).findByName("admin");
+        Role role = new JdbcRoleDao(new DataSourceTestAdapter(tester)).findByName("admin");
 
         Assert.assertEquals("admin", role.getName());
     }
@@ -56,7 +56,7 @@ public class RoleDaoTest {
     public void shouldThrowExceptionWhenTryFoundNotPresentedRole(){
 
         try {
-            new JdbcRoleDao(new JdbcDaoTestAdapter(tester)).findByName("NINJA");
+            new JdbcRoleDao(new DataSourceTestAdapter(tester)).findByName("NINJA");
             Assert.assertTrue("Should throw PersistentException", false);
         } catch (PersistentException e) {
             Assert.assertTrue(e.getCause() instanceof JdbcRoleDao.NoSuchRoleException);
@@ -66,7 +66,7 @@ public class RoleDaoTest {
     @Test
     public void shouldRemoveRowFromTable() throws PersistentException {
         Role role = new Role("admin");
-        dao = new JdbcRoleDao(new JdbcDaoTestAdapter(tester));
+        dao = new JdbcRoleDao(new DataSourceTestAdapter(tester));
 
         dao.remove(role);
         try {
@@ -80,7 +80,7 @@ public class RoleDaoTest {
     @Test
     public void shouldPersistAndFlushOnCreate() throws Exception {
         Role role = new Role("new_role");
-        dao = new JdbcRoleDao(new JdbcDaoTestAdapter(tester));
+        dao = new JdbcRoleDao(new DataSourceTestAdapter(tester));
 
         dao.create(role);
 
@@ -96,7 +96,7 @@ public class RoleDaoTest {
 
     @Test
     public void shouldUpdateRow() throws Exception {
-        dao = new JdbcRoleDao(new JdbcDaoTestAdapter(tester));
+        dao = new JdbcRoleDao(new DataSourceTestAdapter(tester));
         Role role = dao.findByName("admin");
         role.setName("super_admin");
 

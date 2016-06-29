@@ -1,16 +1,63 @@
 package com.lofitskyi.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Email;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 
+@Entity
+@Table(name = "USER")
 public class User {
 
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
+
+    @NotNull
+    @Size (
+            min = 6,
+            max = 50,
+            message = "Login must be between 6 - 50 characters length"
+    )
     private String login;
+
+    @NotNull
+    @Size (
+            min = 6,
+            max = 50,
+            message = "Password must be between 6 - 50 characters length"
+    )
     private String password;
+
+    @NotNull
+    @Email
     private String email;
+
+    @NotNull
+    @Size (
+            max = 50,
+            message = "Too long name"
+    )
     private String firstName;
+
+    @NotNull
+    @Size (
+            max = 50,
+            message = "Too long surname"
+    )
     private String lastName;
+
+    @NotNull
+    @Past(message = "You haven't been born yet;) Are you sure?")
     private Date birthday;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Role role;
 
     //for JPA only

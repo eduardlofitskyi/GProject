@@ -1,7 +1,7 @@
 package com.lofitskyi.repository.jdbc;
 
-import com.lofitskyi.config.AbstractJdbcDao;
-import com.lofitskyi.config.PoolJdbcDao;
+import com.lofitskyi.config.AbstractDataSource;
+import com.lofitskyi.config.PoolDataSource;
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
 import com.lofitskyi.repository.PersistentException;
@@ -31,13 +31,13 @@ public class JdbcUserDao implements UserDao {
     private static final String FIND_BY_EMAIL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE email = ?";
 
     //TODO make dependency injection
-    private AbstractJdbcDao jdbc = new PoolJdbcDao();
+    private AbstractDataSource jdbc = new PoolDataSource();
 
     public JdbcUserDao() {
     }
 
     //for injection others DataSource implementation (in my case, for injection DBUnit's tester connection)
-    public JdbcUserDao(AbstractJdbcDao jdbc) {
+    public JdbcUserDao(AbstractDataSource jdbc) {
         this.jdbc = jdbc;
     }
 

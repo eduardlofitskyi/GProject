@@ -1,8 +1,21 @@
 package com.lofitskyi.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "ROLE")
 public class Role {
 
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
+
+    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
     //for JPA only

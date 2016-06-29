@@ -1,7 +1,7 @@
 package com.lofitskyi.repository.jdbc;
 
-import com.lofitskyi.config.AbstractJdbcDao;
-import com.lofitskyi.config.PoolJdbcDao;
+import com.lofitskyi.config.AbstractDataSource;
+import com.lofitskyi.config.PoolDataSource;
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.repository.PersistentException;
 import com.lofitskyi.repository.RoleDao;
@@ -20,13 +20,13 @@ public class JdbcRoleDao implements RoleDao{
     private static final String FIND_BY_ID_SQL = "SELECT id, name FROM ROLE WHERE id = ?";
 
     //TODO make dependency injection
-    private AbstractJdbcDao jdbc = new PoolJdbcDao();
+    private AbstractDataSource jdbc = new PoolDataSource();
 
     public JdbcRoleDao() {
     }
 
     //for injection others DataSource implementation (in my case, for injection DBUnit's tester connection)
-    public JdbcRoleDao(AbstractJdbcDao jdbc) {
+    public JdbcRoleDao(AbstractDataSource jdbc) {
         this.jdbc = jdbc;
     }
 

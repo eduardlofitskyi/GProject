@@ -1,15 +1,15 @@
 package com.lofitskyi.utils;
 
-import com.lofitskyi.config.AbstractJdbcDao;
+import com.lofitskyi.config.AbstractDataSource;
 import org.dbunit.IDatabaseTester;
 
 import java.sql.Connection;
 
-public class JdbcDaoTestAdapter extends AbstractJdbcDao{
+public class DataSourceTestAdapter extends AbstractDataSource {
 
     private final IDatabaseTester tester;
 
-    public JdbcDaoTestAdapter(IDatabaseTester tester) {
+    public DataSourceTestAdapter(IDatabaseTester tester) {
         this.tester = tester;
     }
 
