@@ -2,14 +2,15 @@ package com.lofitskyi.repository;
 
 import com.lofitskyi.entity.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao {
 
-    void create(User user);
-    void update(User user);
-    void remove(User user);
-    List<User> findAll();
-    User findByLogin(String login);
-    User findByEmail(String email);
+    void create(User user) throws SQLException, PersistentException;
+    void update(User user) throws PersistentException;
+    void remove(User user) throws PersistentException;
+    List<User> findAll() throws PersistentException;
+    User findByLogin(String login) throws PersistentException;
+    User findByEmail(String email) throws PersistentException;
 }

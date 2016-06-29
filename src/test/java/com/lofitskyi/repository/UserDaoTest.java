@@ -35,7 +35,7 @@ public class UserDaoTest {
 
     @BeforeClass
     public static void startUp() throws SQLException {
-        RunScript.execute(JDBC_URL, USER, PASSWORD, "schema.sql", UTF8, false);
+        RunScript.execute(JDBC_URL, USER, PASSWORD, "src/test/resources/schema.sql", UTF8, false);
     }
 
     @Before
@@ -48,37 +48,52 @@ public class UserDaoTest {
         tester.onSetup();
     }
 
-    @Test(expected = JdbcUserDao.NoSuchUserException.class)
+    @Test
     public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedEmail(){
-        new JdbcUserDao(new JdbcDaoTestAdapter(tester)).findByEmail("not_email");
+        try {
+            new JdbcUserDao(new JdbcDaoTestAdapter(tester)).findByEmail("not_email");
+            Assert.assertTrue("Should throw PersistentException", false);
+        } catch (PersistentException e) {
+            Assert.assertTrue(e.getCause() instanceof JdbcUserDao.NoSuchUserException);
+        }
     }
 
     @Test
-    public void shouldFoundUserByEmail(){
+    public void shouldFoundUserByEmail() throws PersistentException {
         User user = new JdbcUserDao(new JdbcDaoTestAdapter(tester)).findByEmail("email1");
 
         Assert.assertEquals("user1", user.getLogin());
     }
 
-    @Test(expected = JdbcUserDao.NoSuchUserException.class)
+    @Test
     public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedLogin(){
-        new JdbcUserDao(new JdbcDaoTestAdapter(tester)).findByLogin("not_login");
+        try {
+            new JdbcUserDao(new JdbcDaoTestAdapter(tester)).findByLogin("not_login");
+            Assert.assertTrue("Should throw PersistentException", false);
+        } catch (PersistentException e) {
+            Assert.assertTrue(e.getCause() instanceof JdbcUserDao.NoSuchUserException);
+        }
     }
 
     @Test
-    public void shouldFoundUserByLogin(){
+    public void shouldFoundUserByLogin() throws PersistentException {
         User user = new JdbcUserDao(new JdbcDaoTestAdapter(tester)).findByLogin("user2");
 
         Assert.assertEquals("email2", user.getEmail());
     }
 
-    @Test (expected = JdbcUserDao.NoSuchUserException.class)
-    public void shouldRemoveRow(){
+    @Test
+    public void shouldRemoveRow() throws PersistentException {
         User user = new JdbcUserDao(new JdbcDaoTestAdapter(tester)).findByLogin("user2");
 
         new JdbcUserDao(new JdbcDaoTestAdapter(tester)).remove(user);
 
-        new JdbcUserDao(new JdbcDaoTestAdapter(tester)).findByLogin("user2");
+        try {
+            new JdbcUserDao(new JdbcDaoTestAdapter(tester)).findByLogin("user2");
+            Assert.assertTrue("Should throw PersistentException", false);
+        } catch (PersistentException e) {
+            Assert.assertTrue(e.getCause() instanceof JdbcUserDao.NoSuchUserException);
+        }
     }
 
     @Test

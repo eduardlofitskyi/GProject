@@ -4,8 +4,8 @@ import com.lofitskyi.entity.Role;
 
 public interface RoleDao {
 
-    void create(Role role);
-    void update(Role role);
-    void remove(Role role);
-    Role findByName(String name);
+    void create(Role role) throws PersistentException;
+    void update(Role role) throws PersistentException;
+    void remove(Role role) throws PersistentException;
+    Role findByName(String name) throws PersistentException;
 }

@@ -32,7 +32,7 @@ public class RoleDaoTest {
 
     @BeforeClass
     public static void startUp() throws SQLException {
-        RunScript.execute(JDBC_URL, USER, PASSWORD, "schema.sql", UTF8, false);
+        RunScript.execute(JDBC_URL, USER, PASSWORD, "src/test/resources/schema.sql", UTF8, false);
     }
 
     @Before
@@ -46,24 +46,35 @@ public class RoleDaoTest {
     }
 
     @Test
-    public void shouldFoundRoleByName(){
+    public void shouldFoundRoleByName() throws PersistentException {
         Role role = new JdbcRoleDao(new JdbcDaoTestAdapter(tester)).findByName("admin");
 
         Assert.assertEquals("admin", role.getName());
     }
 
-    @Test(expected = JdbcRoleDao.NoSuchRoleException.class)
+    @Test
     public void shouldThrowExceptionWhenTryFoundNotPresentedRole(){
-        new JdbcRoleDao(new JdbcDaoTestAdapter(tester)).findByName("NINJA");
+
+        try {
+            new JdbcRoleDao(new JdbcDaoTestAdapter(tester)).findByName("NINJA");
+            Assert.assertTrue("Should throw PersistentException", false);
+        } catch (PersistentException e) {
+            Assert.assertTrue(e.getCause() instanceof JdbcRoleDao.NoSuchRoleException);
+        }
     }
 
-    @Test(expected = JdbcRoleDao.NoSuchRoleException.class)
-    public void shouldRemoveRowFromTable(){
+    @Test
+    public void shouldRemoveRowFromTable() throws PersistentException {
         Role role = new Role("admin");
         dao = new JdbcRoleDao(new JdbcDaoTestAdapter(tester));
 
         dao.remove(role);
-        dao.findByName(role.getName());
+        try {
+            dao.findByName(role.getName());
+            Assert.assertTrue("Should throw PersistentException", false);
+        } catch (PersistentException e) {
+            Assert.assertTrue(e.getCause() instanceof JdbcRoleDao.NoSuchRoleException);
+        }
     }
 
     @Test

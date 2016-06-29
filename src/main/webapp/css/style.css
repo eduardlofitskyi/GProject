@@ -1,0 +1,28 @@
+#container{
+    width: 100%;
+    margin-top: 30px;
+}
+
+#signin_container{
+    width: 25%;
+    margin: 0 auto;
+}
+
+.form-group{
+    display: inline-block;
+    width: 49%;
+}
+
+.form-control{
+    width: 100%;
+    margin-top: 5px;
+}
+
+.btn-submit{
+    float: right;
+    margin: 10px;
+}
+
+.align-center{
+    text-align: center;
+}
