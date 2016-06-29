@@ -25,6 +25,7 @@ public class JdbcUserDao implements UserDao {
             "WHERE id = ?";
 
     private static final String DELETE_SQL = "DELETE FROM USER WHERE login = ?";
+    private static final String DELETE_BY_ID_SQL= "DELETE FROM USER WHERE id = ?";
     private static final String FIND_ALL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER";
     private static final String FIND_BY_LOGIN_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE login = ?";
     private static final String FIND_BY_EMAIL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE email = ?";
@@ -104,6 +105,25 @@ public class JdbcUserDao implements UserDao {
 
             try (PreparedStatement stmt = conn.prepareStatement(DELETE_SQL)) {
                 stmt.setString(1, user.getLogin());
+                stmt.execute();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new PersistentException(e.getMessage(), e);
+            }
+        } catch (SQLException e) {
+            throw new PersistentException(e.getMessage(), e);
+        }
+    }
+
+    public void removeById(User user) throws PersistentException {
+        try (Connection conn = this.jdbc.createConnection()) {
+
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement stmt = conn.prepareStatement(DELETE_BY_ID_SQL)) {
+                stmt.setLong(1, user.getId());
                 stmt.execute();
 
                 conn.commit();

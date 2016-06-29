@@ -10,8 +10,8 @@
 
     </head>
         <div id="container">
-            <div id="signin_container" class="container">
-                <form method="post">
+            <div id="signin-container" class="container">
+                <form method="post" action="/signin">
                     <fieldset>
 
                         <div class="form-group">
@@ -20,7 +20,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input id="login_field"  class="form-control" type="text"name="username" placeholder="Email address" required autofocus><br>
+                            <input id="login_field"  class="form-control" type="text" name="username" placeholder="Email address" required autofocus><br>
                             <input id="pass_field" class="form-control" type="password" name="password" placeholder="Password" required>
                         </div>
 

@@ -5,6 +5,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -17,12 +18,12 @@ public class PoolJdbcDao extends AbstractJdbcDao{
 
         //TODO change on spring's Environment in further
         if (ds == null) {
-            FileInputStream fis;
+            InputStream fis;
             Properties property = new Properties();
             ds = new BasicDataSource();
 
             try {
-                fis = new FileInputStream("src/main/resources/db.properties");
+                fis = PoolJdbcDao.class.getResourceAsStream("/db.properties");
                 property.load(fis);
 
                 ds.setUrl(property.getProperty("db.url"));
