@@ -35,6 +35,7 @@ public class HibernateRoleDao implements RoleDao {
             tx = session.getTransaction();
             tx.begin();
             session.update(role);
+            session.flush();
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
@@ -47,6 +48,7 @@ public class HibernateRoleDao implements RoleDao {
         Transaction tx = null;
         try (Session session = sf.openSession()) {
             tx = session.getTransaction();
+            tx.begin();
             session.remove(role);
             tx.commit();
         } catch (Exception e) {
