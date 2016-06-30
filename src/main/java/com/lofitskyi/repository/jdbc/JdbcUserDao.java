@@ -29,6 +29,7 @@ public class JdbcUserDao implements UserDao {
     private static final String FIND_ALL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER";
     private static final String FIND_BY_LOGIN_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE login = ?";
     private static final String FIND_BY_EMAIL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE email = ?";
+    private static final String FIND_BY_ID_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE id = ?";
 
     //TODO make dependency injection
     private AbstractDataSource jdbc = new PoolDataSource();
@@ -117,6 +118,7 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
+    @Override
     public void removeById(User user) throws PersistentException {
         try (Connection conn = this.jdbc.createConnection()) {
 
@@ -173,6 +175,22 @@ public class JdbcUserDao implements UserDao {
 
         try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_LOGIN_SQL)) {
             stmt.setString(1, login);
+
+            user = getUserFromResultSet(stmt.executeQuery());
+
+        } catch (SQLException e) {
+            throw new PersistentException(e.getMessage(), e);
+        }
+
+        return user;
+    }
+
+    @Override
+    public User findById(Long id) throws PersistentException {
+        User user = new User();
+
+        try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID_SQL)) {
+            stmt.setLong(1, id);
 
             user = getUserFromResultSet(stmt.executeQuery());
 

@@ -20,7 +20,7 @@ public class User {
 
     @NotNull
     @Size (
-            min = 6,
+            min = 5,
             max = 50,
             message = "Login must be between 6 - 50 characters length"
     )
@@ -43,6 +43,7 @@ public class User {
             max = 50,
             message = "Too long name"
     )
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @NotNull
@@ -50,6 +51,7 @@ public class User {
             max = 50,
             message = "Too long surname"
     )
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @NotNull
@@ -58,6 +60,7 @@ public class User {
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
     //for JPA only
@@ -147,5 +150,21 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id.equals(user.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

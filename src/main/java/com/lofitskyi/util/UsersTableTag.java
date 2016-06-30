@@ -1,9 +1,6 @@
 package com.lofitskyi.util;
 
 import com.lofitskyi.entity.User;
-import com.lofitskyi.repository.PersistentException;
-import com.lofitskyi.repository.UserDao;
-import com.lofitskyi.repository.jdbc.JdbcUserDao;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -13,17 +10,14 @@ import java.util.List;
 
 public class UsersTableTag extends SimpleTagSupport {
 
-    private UserDao dao = new JdbcUserDao();
+    private List<User> users;
+
+    public void setCollection(List<User> users) {
+        this.users = users;
+    }
 
     @Override
     public void doTag() throws JspException, IOException {
-
-        List<User> users = null;
-        try {
-            users = dao.findAll();
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
 
         JspWriter out = this.getJspContext().getOut();
         out.println("<table id=\"result-table\"><tr>\n" +
@@ -43,7 +37,7 @@ public class UsersTableTag extends SimpleTagSupport {
             out.println("<td>" + user.getLastName() + "</td>");
             out.println("<td>" + user.getBirthday() + "</td>");
             out.println("<td>" + user.getRole().getName() + "</td>");
-            out.println("<td><a href=\"/changedata.jsp?type=edit&id=" + user.getId() + "&username=" + user.getLogin() + "\">Edit</a> /" +
+            out.println("<td><a href=\"/change?type=edit&id=" + user.getId() + "&username=" + user.getLogin() + "\">Edit</a> /" +
                     " <a href=\"/del?id=" + user.getId() + "\" onClick=\"return confirm('Are you sure you want to remove user?');\">Remove</a>");
             out.println("</tr>");
         }

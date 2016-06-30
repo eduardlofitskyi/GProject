@@ -15,9 +15,9 @@
 <body>
     <div id="container">
         <jsp:include page="adminbar.jsp" />
-        <a href="changedata.jsp?type=add">Add user</a>
+        <a href="change?type=add">Add user</a>
 
-        <ct:users/>
+        <ct:users collection="${requestScope.userList}"/>
     </div>
 </body>
 </html>

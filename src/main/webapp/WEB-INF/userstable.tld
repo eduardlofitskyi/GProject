@@ -12,5 +12,11 @@
         <name>users</name>
         <tag-class>com.lofitskyi.util.UsersTableTag</tag-class>
         <body-content>empty</body-content>
+
+        <attribute>
+            <name>collection</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
 </taglib>

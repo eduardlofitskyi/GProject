@@ -20,10 +20,10 @@
 <body>
 <jsp:include page="adminbar.jsp"/>
 <div id="container">
-    <c:if test="${param.type == 'edit'}">
+    <c:if test="${not empty requestScope.editUser}">
         <h1>Edit user</h1>
     </c:if>
-    <c:if test="${param.type == 'add'}">
+    <c:if test="${empty requestScope.editUser}">
         <h1>Add user</h1>
     </c:if>
     <div id="edit-container">
@@ -39,7 +39,7 @@
             <div class="block">
                 <label>Login</label>
                 <c:if test="${param.type == 'edit'}">
-                    <input type="text" name="username_showed" value="${param.username}" disabled/>
+                    <input type="text" name="username_showed" value="${requestScope.editUser.login}" disabled/>
                 </c:if>
                 <c:if test="${param.type == 'add'}">
                     <input type="text" name="username" required/>
@@ -55,26 +55,57 @@
             </div>
             <div class="block">
                 <label>E-mail</label>
-                <input type="text" name="email" required/>
+                <c:if test="${param.type == 'edit'}">
+                    <input type="text" name="email" value="${requestScope.editUser.email}" required/>
+                </c:if>
+                <c:if test="${param.type == 'add'}">
+                    <input type="text" name="email" required/>
+                </c:if>
             </div>
             <div class="block">
                 <label>First name</label>
-                <input type="text" name="f_name" required/>
+                <c:if test="${param.type == 'edit'}">
+                    <input type="text" name="f_name" value="${requestScope.editUser.firstName}" required/>
+                </c:if>
+                <c:if test="${param.type == 'add'}">
+                    <input type="text" name="f_name" required/>
+                </c:if>
             </div>
             <div class="block">
                 <label>Last name</label>
-                <input type="text" name="l_name" required/>
+                <c:if test="${param.type == 'edit'}">
+                    <input type="text" name="l_name" value="${requestScope.editUser.lastName}" required/>
+                </c:if>
+                <c:if test="${param.type == 'add'}">
+                    <input type="text" name="l_name" required/>
+                </c:if>
             </div>
             <div class="block">
                 <label>Birthday</label>
-                <input type="date" name="birthday" required/>
+                <input type="date" name="birthday" value="${requestScope.editUser.birthday}" required/>
             </div>
             <div class="block">
                 <label>Role</label>
-                <select size="1" name="role">
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
+                <c:if test="${param.type == 'edit'}">
+                    <c:if test="${requestScope.editUser.role.name eq 'admin'}">
+                        <select size="1" name="role">
+                            <option value="user">User</option>
+                            <option selected value="admin">Admin</option>
+                        </select>
+                    </c:if>
+                    <c:if test="${requestScope.editUser.role.name eq 'user'}">
+                        <select size="1" name="role">
+                            <option selected value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </c:if>
+                </c:if>
+                <c:if test="${param.type == 'add'}">
+                    <select size="1" name="role">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </c:if>
             </div>
             <div class="block">
                 <input id="sbm_btn" type="submit" value="Ok" disabled>

@@ -14,29 +14,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
-@WebServlet("/del")
-public class RemoveUserController extends HttpServlet{
+@WebServlet("/admin")
+public class PostChangeHandlerController extends HttpServlet{
 
+    private PrintWriter out;
     private UserDao dao = new HibernateUserDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
+        doPost(req, resp);
+    }
 
-        Long id = Long.valueOf(req.getParameter("id"));
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        User user = new User();
-        user.setId(id);
+        out = resp.getWriter();
 
         try {
-            dao.removeById(user);
+            final List<User> users = dao.findAll();
+            req.setAttribute("userList", users);
         } catch (PersistentException e) {
             out.println("<html><body onload=\"alert('Something went wrong. Try again')\"><a href=\"home.jsp\">Home page</a></body></html>");
             return;
         }
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin");
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("admin.jsp");
         dispatcher.forward(req, resp);
     }
 }
