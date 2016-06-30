@@ -1,10 +1,10 @@
-package com.lofitskyi.repository.jdbc;
+package com.lofitskyi.service.jdbc;
 
 import com.lofitskyi.config.AbstractDataSource;
 import com.lofitskyi.config.PoolDataSource;
 import com.lofitskyi.entity.Role;
-import com.lofitskyi.repository.PersistentException;
-import com.lofitskyi.repository.RoleDao;
+import com.lofitskyi.service.PersistentException;
+import com.lofitskyi.service.RoleDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

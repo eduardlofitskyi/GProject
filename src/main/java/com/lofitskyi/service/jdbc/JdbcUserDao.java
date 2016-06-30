@@ -1,11 +1,11 @@
-package com.lofitskyi.repository.jdbc;
+package com.lofitskyi.service.jdbc;
 
 import com.lofitskyi.config.AbstractDataSource;
 import com.lofitskyi.config.PoolDataSource;
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
-import com.lofitskyi.repository.PersistentException;
-import com.lofitskyi.repository.UserDao;
+import com.lofitskyi.service.PersistentException;
+import com.lofitskyi.service.UserDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -118,7 +118,7 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
-    @Override
+
     public void removeById(User user) throws PersistentException {
         try (Connection conn = this.jdbc.createConnection()) {
 

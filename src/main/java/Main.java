@@ -1,9 +1,9 @@
 import com.lofitskyi.entity.User;
-import com.lofitskyi.repository.PersistentException;
-import com.lofitskyi.repository.RoleDao;
-import com.lofitskyi.repository.UserDao;
-import com.lofitskyi.repository.hibernate.HibernateRoleDao;
-import com.lofitskyi.repository.hibernate.HibernateUserDao;
+import com.lofitskyi.service.PersistentException;
+import com.lofitskyi.service.RoleDao;
+import com.lofitskyi.service.UserDao;
+import com.lofitskyi.service.hibernate.HibernateRoleDao;
+import com.lofitskyi.service.hibernate.HibernateUserDao;
 
 import java.util.List;
 

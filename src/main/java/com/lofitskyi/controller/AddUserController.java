@@ -2,11 +2,11 @@ package com.lofitskyi.controller;
 
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
-import com.lofitskyi.repository.PersistentException;
-import com.lofitskyi.repository.UserDao;
-import com.lofitskyi.repository.hibernate.HibernateUserDao;
-import com.lofitskyi.repository.jdbc.JdbcRoleDao;
-import com.lofitskyi.repository.jdbc.JdbcUserDao;
+import com.lofitskyi.service.PersistentException;
+import com.lofitskyi.service.UserDao;
+import com.lofitskyi.service.hibernate.HibernateUserDao;
+import com.lofitskyi.service.jdbc.JdbcRoleDao;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +23,8 @@ import java.sql.SQLException;
 @WebServlet("/add")
 public class AddUserController extends HttpServlet{
 
-    private UserDao dao = new HibernateUserDao();
+    @Autowired
+    private UserDao dao;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

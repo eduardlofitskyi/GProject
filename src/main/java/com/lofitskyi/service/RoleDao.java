@@ -1,4 +1,4 @@
-package com.lofitskyi.repository;
+package com.lofitskyi.service;
 
 import com.lofitskyi.entity.Role;
 

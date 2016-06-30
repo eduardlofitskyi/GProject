@@ -1,6 +1,6 @@
 package com.lofitskyi.config;
 
-import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.service.PersistentException;
 
 import java.sql.Connection;
 
