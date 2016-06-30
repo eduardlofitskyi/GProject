@@ -6,6 +6,7 @@ import com.lofitskyi.repository.RoleDao;
 import com.lofitskyi.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 public class HibernateRoleDao implements RoleDao {
@@ -15,33 +16,41 @@ public class HibernateRoleDao implements RoleDao {
 
     @Override
     public void create(Role role) throws PersistentException {
+        Transaction tx = null;
         try (Session session = sf.openSession()) {
-            session.beginTransaction();
+            tx = session.getTransaction();
+            tx.begin();
             session.save(role);
-            session.getTransaction().commit();
+            tx.commit();
         } catch (Exception e) {
+            tx.rollback();
             throw new PersistentException(e.getMessage(), e);
         }
     }
 
     @Override
     public void update(Role role) throws PersistentException {
+        Transaction tx = null;
         try (Session session = sf.openSession()) {
-            session.beginTransaction();
+            tx = session.getTransaction();
+            tx.begin();
             session.update(role);
-            session.getTransaction().commit();
+            tx.commit();
         } catch (Exception e) {
+            tx.rollback();
             throw new PersistentException(e.getMessage(), e);
         }
     }
 
     @Override
     public void remove(Role role) throws PersistentException {
+        Transaction tx = null;
         try (Session session = sf.openSession()) {
-            session.beginTransaction();
+            tx = session.getTransaction();
             session.remove(role);
-            session.getTransaction().commit();
+            tx.commit();
         } catch (Exception e) {
+            tx.rollback();
             throw new PersistentException(e.getMessage(), e);
         }
     }

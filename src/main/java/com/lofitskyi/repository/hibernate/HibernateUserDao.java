@@ -7,6 +7,7 @@ import com.lofitskyi.repository.jdbc.JdbcUserDao;
 import com.lofitskyi.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.sql.SQLException;
@@ -23,34 +24,43 @@ public class HibernateUserDao implements UserDao {
 
     @Override
     public void create(User user) throws SQLException, PersistentException {
+        Transaction tx = null;
         try (Session session = sf.openSession()) {
-            session.beginTransaction();
+            tx = session.getTransaction();
+            tx.begin();
             session.save(user);
-            session.getTransaction().commit();
+            tx.commit();
         } catch (Exception e) {
+            tx.rollback();
             throw new PersistentException(e.getMessage(), e);
         }
     }
 
     @Override
     public void update(User user) throws PersistentException {
+        Transaction tx = null;
         try (Session session = sf.openSession()) {
-            session.beginTransaction();
+            tx = session.getTransaction();
+            tx.begin();
             session.update(user);
             session.flush();
-            session.getTransaction().commit();
+            tx.commit();
         } catch (Exception e) {
+            tx.rollback();
             throw new PersistentException(e.getMessage(), e);
         }
     }
 
     @Override
     public void remove(User user) throws PersistentException {
+        Transaction tx = null;
         try (Session session = sf.openSession()) {
-            session.beginTransaction();
+            tx = session.getTransaction();
+            tx.begin();
             session.remove(user);
-            session.getTransaction().commit();
+            tx.commit();
         } catch (Exception e) {
+            tx.rollback();
             throw new PersistentException(e.getMessage(), e);
         }
     }
