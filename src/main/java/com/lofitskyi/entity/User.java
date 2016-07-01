@@ -162,9 +162,4 @@ public class User {
         return id.equals(user.id);
 
     }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 }

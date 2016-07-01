@@ -21,7 +21,7 @@
         </c:if>
         <c:if test="${empty user}">
             <h1>Hello, ANONYMOUS</h1>
-            <p>Sign in <a href="index.jsp">here</a></p>
+            <p>Sign in <a href="/login">here</a></p>
         </c:if>
     </div>
 </body>

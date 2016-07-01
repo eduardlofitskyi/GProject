@@ -1,5 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -11,7 +12,8 @@
     </head>
         <div id="container">
             <div id="signin-container" class="container">
-                <form method="post" action="/signin">
+                <form name="f" method="post" action="${loginUrl}">
+                    <input name="_csrf" type="hidden" value="6829b1ae-0a14-4920-aac4-5abbd7eeb9ee" />
                     <fieldset>
 
                         <div class="form-group">
@@ -20,8 +22,8 @@
                         </div>
 
                         <div class="form-group">
-                            <input id="login_field"  class="form-control" type="text" name="username" placeholder="Email address" required autofocus><br>
-                            <input id="pass_field" class="form-control" type="password" name="password" placeholder="Password" required>
+                            <input id="login_field"  class="form-control" type="text" name="j_username" placeholder="Email address" required autofocus><br>
+                            <input id="pass_field" class="form-control" type="password" name="j_password" placeholder="Password" required>
                         </div>
 
                         <button class="btn-submit" type="submit">Sign In</button>
