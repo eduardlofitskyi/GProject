@@ -21,6 +21,13 @@ public class HibernateUserDao implements UserDao {
     private static final String FIND_BY_EMAIL_JPQL = "FROM User WHERE email=:email";
     private static final String FIND_BY_ID_JPQL = "FROM User WHERE id=:id";
 
+    public HibernateUserDao() {
+    }
+
+    //for testing purpose
+    public HibernateUserDao(SessionFactory sf) {
+        this.sf = sf;
+    }
 
     @Override
     public void create(User user) throws SQLException, PersistentException {
@@ -42,8 +49,7 @@ public class HibernateUserDao implements UserDao {
         try (Session session = sf.openSession()) {
             tx = session.getTransaction();
             tx.begin();
-            session.update(user);
-            session.flush();
+            session.saveOrUpdate(user);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

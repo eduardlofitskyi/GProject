@@ -15,6 +15,6 @@ CREATE TABLE PUBLIC.USER
     first_name VARCHAR(25),
     last_name VARCHAR(25),
     birthday DATE,
-    role_id INT,
+    role_id BIGINT,
     FOREIGN KEY (role_id) REFERENCES PUBLIC.ROLE(id)
 );

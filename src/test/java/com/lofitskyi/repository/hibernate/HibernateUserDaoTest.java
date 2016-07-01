@@ -1,9 +1,9 @@
-package com.lofitskyi.repository;
+package com.lofitskyi.repository.hibernate;
 
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
-import com.lofitskyi.repository.jdbc.JdbcRoleDao;
-import com.lofitskyi.repository.jdbc.JdbcUserDao;
+import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.repository.UserDao;
 import com.lofitskyi.utils.DataSourceTestAdapter;
 import org.dbunit.Assertion;
 import org.dbunit.IDatabaseTester;
@@ -12,34 +12,48 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.h2.tools.RunScript;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.junit.*;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.h2.engine.Constants.UTF8;
+import static org.junit.Assert.*;
 
-public class UserDaoTest {
+public class HibernateUserDaoTest {
 
     private static final String JDBC_DRIVER = org.h2.Driver.class.getName();
-    private static final String JDBC_URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
-    private static final String USER = "sa";
+    private static final String JDBC_URL = "jdbc:h2:mem:test_hibernate;DB_CLOSE_DELAY=-1";
+    private static final String USER = "";
     private static final String PASSWORD = "";
 
-    private IDatabaseTester tester;
+    private static SessionFactory sf;
+
     private UserDao dao;
+    private IDatabaseTester tester;
+
 
     @BeforeClass
-    public static void startUp() throws SQLException {
+    public static void startUp() throws Exception {
+        org.hibernate.cfg.Configuration configuration = new Configuration();
+        configuration.addAnnotatedClass(Role.class)
+            .addAnnotatedClass(User.class);
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        configuration.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
+        configuration.setProperty("hibernate.connection.url", "jdbc:h2:mem:test_hibernate;DB_CLOSE_DELAY=-1");
+        configuration.setProperty("hibernate.hbm2ddl.auto", "validate");
+
         RunScript.execute(JDBC_URL, USER, PASSWORD, "src/test/resources/schema.sql", UTF8, false);
+
+        sf = configuration.buildSessionFactory();
     }
 
     @Before
     public void setUp() throws Exception {
+        dao = new HibernateUserDao(sf);
+
         tester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD);
         IDataSet dataSet = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream("user/user-dataset.xml"));
@@ -48,58 +62,42 @@ public class UserDaoTest {
         tester.onSetup();
     }
 
-    @Test
-    public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedEmail(){
-        try {
-            new JdbcUserDao(new DataSourceTestAdapter(tester)).findByEmail("not_email");
-            Assert.assertTrue("Should throw PersistentException", false);
-        } catch (PersistentException e) {
-            Assert.assertTrue(e.getCause() instanceof JdbcUserDao.NoSuchUserException);
-        }
+    @Test(expected = PersistentException.class)
+    public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedEmail() throws PersistentException {
+            dao.findByEmail("not_email");
     }
 
     @Test
     public void shouldFoundUserByEmail() throws PersistentException {
-        User user = new JdbcUserDao(new DataSourceTestAdapter(tester)).findByEmail("email1@mail.com");
+        User user = dao.findByEmail("email1@mail.com");
 
         Assert.assertEquals("user1", user.getLogin());
     }
 
-    @Test
-    public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedLogin(){
-        try {
-            new JdbcUserDao(new DataSourceTestAdapter(tester)).findByLogin("not_login");
-            Assert.assertTrue("Should throw PersistentException", false);
-        } catch (PersistentException e) {
-            Assert.assertTrue(e.getCause() instanceof JdbcUserDao.NoSuchUserException);
-        }
+    @Test(expected = PersistentException.class)
+    public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedLogin() throws PersistentException {
+            dao.findByLogin("not_login");
     }
 
     @Test
     public void shouldFoundUserByLogin() throws PersistentException {
-        User user = new JdbcUserDao(new DataSourceTestAdapter(tester)).findByLogin("user2");
+        User user = dao.findByLogin("user2");
 
         Assert.assertEquals("email2@mail.com", user.getEmail());
     }
 
-    @Test
+    @Test(expected = PersistentException.class)
     public void shouldRemoveRow() throws PersistentException {
-        User user = new JdbcUserDao(new DataSourceTestAdapter(tester)).findByLogin("user2");
+        User user = dao.findByLogin("user2");
 
-        new JdbcUserDao(new DataSourceTestAdapter(tester)).remove(user);
+        dao.remove(user);
 
-        try {
-            new JdbcUserDao(new DataSourceTestAdapter(tester)).findByLogin("user2");
-            Assert.assertTrue("Should throw PersistentException", false);
-        } catch (PersistentException e) {
-            Assert.assertTrue(e.getCause() instanceof JdbcUserDao.NoSuchUserException);
-        }
+        dao.findByLogin("user2");
     }
 
     @Test
     public void shouldPersistAndFlushOnCreate() throws Exception {
-        dao = new JdbcUserDao(new DataSourceTestAdapter(tester));
-        Role adminRole = new JdbcRoleDao(new DataSourceTestAdapter(tester)).findByName("admin");
+        Role adminRole = new HibernateRoleDao(sf).findByName("admin");
         User user = new User("new_user", "new_pass", "new_email@mail.com", "new_f_name", "new_surname", new Date(95, 0, 1), adminRole);
 
         dao.create(user);
@@ -116,7 +114,6 @@ public class UserDaoTest {
 
     @Test
     public void shouldUpdateRow() throws Exception {
-        dao = new JdbcUserDao(new DataSourceTestAdapter(tester));
         User user = dao.findByLogin("user1");
         user.setLogin("upd_user");
         user.setPassword("password_upd");
@@ -135,7 +132,7 @@ public class UserDaoTest {
 
     @Test
     public void shouldFetchAllUsersOnFindAll() throws Exception {
-        final List<User> users = new JdbcUserDao(new DataSourceTestAdapter(tester)).findAll();
+        final List<User> users = dao.findAll();
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
@@ -146,6 +143,11 @@ public class UserDaoTest {
         String[] ignore = {"id"};
         Assertion.assertEqualsIgnoreCols(expectedData, actualData, "USER", ignore);
         Assert.assertEquals(expectedData.getTable("USER").getRowCount(), users.size());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        dao = null;
     }
 
 }

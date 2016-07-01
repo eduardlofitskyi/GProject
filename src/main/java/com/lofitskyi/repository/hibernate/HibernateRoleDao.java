@@ -14,6 +14,13 @@ public class HibernateRoleDao implements RoleDao {
     private SessionFactory sf = HibernateUtil.getSessionFactory();
     private static final String FIND_BY_NAME_JPQL = "SELECT new Role(id, name) FROM Role WHERE name=:name";
 
+    public HibernateRoleDao() {
+    }
+
+    public HibernateRoleDao(SessionFactory sf) {
+        this.sf = sf;
+    }
+
     @Override
     public void create(Role role) throws PersistentException {
         Transaction tx = null;
@@ -34,7 +41,7 @@ public class HibernateRoleDao implements RoleDao {
         try (Session session = sf.openSession()) {
             tx = session.getTransaction();
             tx.begin();
-            session.update(role);
+            session.saveOrUpdate(role);
             session.flush();
             tx.commit();
         } catch (Exception e) {
