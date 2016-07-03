@@ -1,11 +1,12 @@
 package com.lofitskyi.service;
 
 import com.lofitskyi.entity.User;
+import com.lofitskyi.repository.PersistentException;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface UserDao {
+public interface UserService {
 
     void create(User user) throws SQLException, PersistentException;
     void update(User user) throws PersistentException;

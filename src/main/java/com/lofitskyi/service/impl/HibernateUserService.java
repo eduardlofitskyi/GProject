@@ -1,32 +1,36 @@
-package com.lofitskyi.service.hibernate;
+package com.lofitskyi.service.impl;
 
 import com.lofitskyi.entity.User;
-import com.lofitskyi.repository.UserRepository;
-import com.lofitskyi.service.PersistentException;
-import com.lofitskyi.service.UserDao;
+import com.lofitskyi.repository.springdata.UserRepository;
+import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class HibernateUserDao implements UserDao {
+public class HibernateUserService implements UserService {
 
     @Autowired
     private UserRepository repository;
 
     @Override
+    @Transactional
     public void create(User user) throws SQLException, PersistentException {
         repository.saveAndFlush(user);
     }
 
     @Override
+    @Transactional
     public void update(User user) throws PersistentException {
         repository.saveAndFlush(user);
     }
 
     @Override
+    @Transactional
     public void remove(User user) throws PersistentException {
         repository.delete(user);
     }

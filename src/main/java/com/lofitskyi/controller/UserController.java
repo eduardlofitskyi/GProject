@@ -1,9 +1,9 @@
 package com.lofitskyi.controller;
 
 import com.lofitskyi.entity.User;
-import com.lofitskyi.service.PersistentException;
-import com.lofitskyi.service.RoleDao;
-import com.lofitskyi.service.UserDao;
+import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.service.RoleService;
+import com.lofitskyi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +20,10 @@ import java.sql.SQLException;
 public class UserController {
 
     @Autowired
-    UserDao dao;
+    UserService dao;
 
     @Autowired
-    RoleDao roleDao;
+    RoleService roleService;
 
     @ModelAttribute("user")
     public User getUserObject() {

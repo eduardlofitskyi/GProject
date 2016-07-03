@@ -1,8 +1,9 @@
 package com.lofitskyi.service;
 
 import com.lofitskyi.entity.Role;
+import com.lofitskyi.repository.PersistentException;
 
-public interface RoleDao {
+public interface RoleService {
 
     void create(Role role) throws PersistentException;
     void update(Role role) throws PersistentException;

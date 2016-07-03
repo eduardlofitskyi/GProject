@@ -1,4 +1,4 @@
-package com.lofitskyi.service;
+package com.lofitskyi.repository;
 
 /**
  * Universal exception specific for DAO layer

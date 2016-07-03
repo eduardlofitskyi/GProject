@@ -1,9 +1,7 @@
 package com.lofitskyi.repository;
 
 import com.lofitskyi.entity.Role;
-import com.lofitskyi.service.PersistentException;
-import com.lofitskyi.service.RoleDao;
-import com.lofitskyi.service.jdbc.JdbcRoleDao;
+import com.lofitskyi.repository.jdbc.JdbcRoleRepository;
 import com.lofitskyi.utils.DataSourceTestAdapter;
 import org.dbunit.Assertion;
 import org.dbunit.IDatabaseTester;
@@ -49,7 +47,7 @@ public class RoleDaoTest {
 
     @Test
     public void shouldFoundRoleByName() throws PersistentException {
-        Role role = new JdbcRoleDao(new DataSourceTestAdapter(tester)).findByName("admin");
+        Role role = new JdbcRoleRepository(new DataSourceTestAdapter(tester)).findByName("admin");
 
         Assert.assertEquals("admin", role.getName());
     }
@@ -58,31 +56,31 @@ public class RoleDaoTest {
     public void shouldThrowExceptionWhenTryFoundNotPresentedRole(){
 
         try {
-            new JdbcRoleDao(new DataSourceTestAdapter(tester)).findByName("NINJA");
+            new JdbcRoleRepository(new DataSourceTestAdapter(tester)).findByName("NINJA");
             Assert.assertTrue("Should throw PersistentException", false);
         } catch (PersistentException e) {
-            Assert.assertTrue(e.getCause() instanceof JdbcRoleDao.NoSuchRoleException);
+            Assert.assertTrue(e.getCause() instanceof JdbcRoleRepository.NoSuchRoleException);
         }
     }
 
     @Test
     public void shouldRemoveRowFromTable() throws PersistentException {
         Role role = new Role("admin");
-        dao = new JdbcRoleDao(new DataSourceTestAdapter(tester));
+        dao = new JdbcRoleRepository(new DataSourceTestAdapter(tester));
 
         dao.remove(role);
         try {
             dao.findByName(role.getName());
             Assert.assertTrue("Should throw PersistentException", false);
         } catch (PersistentException e) {
-            Assert.assertTrue(e.getCause() instanceof JdbcRoleDao.NoSuchRoleException);
+            Assert.assertTrue(e.getCause() instanceof JdbcRoleRepository.NoSuchRoleException);
         }
     }
 
     @Test
     public void shouldPersistAndFlushOnCreate() throws Exception {
         Role role = new Role("new_role");
-        dao = new JdbcRoleDao(new DataSourceTestAdapter(tester));
+        dao = new JdbcRoleRepository(new DataSourceTestAdapter(tester));
 
         dao.create(role);
 
@@ -98,7 +96,7 @@ public class RoleDaoTest {
 
     @Test
     public void shouldUpdateRow() throws Exception {
-        dao = new JdbcRoleDao(new DataSourceTestAdapter(tester));
+        dao = new JdbcRoleRepository(new DataSourceTestAdapter(tester));
         Role role = dao.findByName("admin");
         role.setName("super_admin");
 

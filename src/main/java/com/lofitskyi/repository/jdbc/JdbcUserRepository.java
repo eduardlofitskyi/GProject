@@ -1,12 +1,13 @@
-package com.lofitskyi.service.jdbc;
+package com.lofitskyi.repository.jdbc;
 
-import com.lofitskyi.config.AbstractDataSource;
-import com.lofitskyi.config.PoolDataSource;
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
-import com.lofitskyi.service.PersistentException;
-import com.lofitskyi.service.UserDao;
+import com.lofitskyi.repository.UserDao;
+import com.lofitskyi.repository.PersistentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcUserDao implements UserDao {
+@Component
+public class JdbcUserRepository implements UserDao {
 
     private static final String CREATE_SQL = "INSERT INTO USER " +
             "(login, password, email, first_name, last_name, birthday, role_id)" +
@@ -31,21 +33,21 @@ public class JdbcUserDao implements UserDao {
     private static final String FIND_BY_EMAIL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE email = ?";
     private static final String FIND_BY_ID_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE id = ?";
 
-    //TODO make dependency injection
-    private AbstractDataSource jdbc = new PoolDataSource();
+    @Autowired
+    private DataSource ds;
 
-    public JdbcUserDao() {
+    public JdbcUserRepository() {
     }
 
     //for injection others DataSource implementation (in my case, for injection DBUnit's tester connection)
-    public JdbcUserDao(AbstractDataSource jdbc) {
-        this.jdbc = jdbc;
+    public JdbcUserRepository(DataSource ds) {
+        this.ds = ds;
     }
 
     @Override
     public void create(User user) throws PersistentException {
 
-        try (Connection conn = this.jdbc.createConnection()) {
+        try (Connection conn = this.ds.getConnection()) {
 
             conn.setAutoCommit(false);
 
@@ -72,7 +74,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void update(User user) throws PersistentException {
-        try (Connection conn = this.jdbc.createConnection()) {
+        try (Connection conn = this.ds.getConnection()) {
 
             conn.setAutoCommit(false);
 
@@ -100,7 +102,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void remove(User user) throws PersistentException {
-        try (Connection conn = this.jdbc.createConnection()) {
+        try (Connection conn = this.ds.getConnection()) {
 
             conn.setAutoCommit(false);
 
@@ -120,7 +122,7 @@ public class JdbcUserDao implements UserDao {
 
 
     public void removeById(User user) throws PersistentException {
-        try (Connection conn = this.jdbc.createConnection()) {
+        try (Connection conn = this.ds.getConnection()) {
 
             conn.setAutoCommit(false);
 
@@ -143,12 +145,12 @@ public class JdbcUserDao implements UserDao {
 
         List<User> users = new ArrayList<>();
 
-        try (Connection conn = this.jdbc.createConnection();
+        try (Connection conn = this.ds.getConnection();
              PreparedStatement stmt = conn.prepareStatement(FIND_ALL_SQL); ResultSet resultSet = stmt.executeQuery()) {
 
             while (resultSet.next()) {
                 User user = new User();
-                Role role = new JdbcRoleDao(this.jdbc).findById(resultSet.getLong("role_id"));
+                Role role = new JdbcRoleRepository(this.ds).findById(resultSet.getLong("role_id"));
 
                 user.setId(resultSet.getLong("id"));
                 user.setLogin(resultSet.getString("login"));
@@ -173,7 +175,7 @@ public class JdbcUserDao implements UserDao {
     public User findByLogin(String login) throws PersistentException {
         User user = new User();
 
-        try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_LOGIN_SQL)) {
+        try (Connection conn = this.ds.getConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_LOGIN_SQL)) {
             stmt.setString(1, login);
 
             user = getUserFromResultSet(stmt.executeQuery());
@@ -189,7 +191,7 @@ public class JdbcUserDao implements UserDao {
     public User findById(Long id) throws PersistentException {
         User user = new User();
 
-        try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID_SQL)) {
+        try (Connection conn = this.ds.getConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID_SQL)) {
             stmt.setLong(1, id);
 
             user = getUserFromResultSet(stmt.executeQuery());
@@ -205,7 +207,7 @@ public class JdbcUserDao implements UserDao {
     public User findByEmail(String email) throws PersistentException {
         User user = new User();
 
-        try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_EMAIL_SQL)) {
+        try (Connection conn = this.ds.getConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_EMAIL_SQL)) {
             stmt.setString(1, email);
 
             user = getUserFromResultSet(stmt.executeQuery());
@@ -226,7 +228,7 @@ public class JdbcUserDao implements UserDao {
             if (!resultSet.next()) throw new PersistentException(new NoSuchUserException());
 
             user = new User();
-            Role role = new JdbcRoleDao(this.jdbc).findById(resultSet.getLong("role_id"));
+            Role role = new JdbcRoleRepository(this.ds).findById(resultSet.getLong("role_id"));
 
             user.setId(resultSet.getLong("id"));
             user.setLogin(resultSet.getString("login"));

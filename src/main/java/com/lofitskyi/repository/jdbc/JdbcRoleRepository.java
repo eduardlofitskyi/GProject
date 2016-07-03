@@ -1,17 +1,19 @@
-package com.lofitskyi.service.jdbc;
+package com.lofitskyi.repository.jdbc;
 
-import com.lofitskyi.config.AbstractDataSource;
-import com.lofitskyi.config.PoolDataSource;
 import com.lofitskyi.entity.Role;
-import com.lofitskyi.service.PersistentException;
-import com.lofitskyi.service.RoleDao;
+import com.lofitskyi.repository.RoleDao;
+import com.lofitskyi.repository.PersistentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JdbcRoleDao implements RoleDao{
+@Component
+public class JdbcRoleRepository implements RoleDao {
 
     private static final String CREATE_SQL = "INSERT INTO ROLE (name) VALUES (?)";
     private static final String UPDATE_SQL = "UPDATE ROLE SET name = ? WHERE id = ?";
@@ -19,19 +21,19 @@ public class JdbcRoleDao implements RoleDao{
     private static final String FIND_BY_NAME_SQL = "SELECT id, name FROM ROLE WHERE name = ?";
     private static final String FIND_BY_ID_SQL = "SELECT id, name FROM ROLE WHERE id = ?";
 
-    //TODO make dependency injection
-    private AbstractDataSource jdbc = new PoolDataSource();
+    @Autowired
+    private DataSource ds;
 
-    public JdbcRoleDao() {
+    public JdbcRoleRepository() {
     }
 
     //for injection others DataSource implementation (in my case, for injection DBUnit's tester connection)
-    public JdbcRoleDao(AbstractDataSource jdbc) {
-        this.jdbc = jdbc;
+    public JdbcRoleRepository(DataSource ds) {
+        this.ds = ds;
     }
 
     public void create(Role role) throws PersistentException {
-        try (Connection conn = this.jdbc.createConnection()){
+        try (Connection conn = this.ds.getConnection()){
 
             conn.setAutoCommit(false);
 
@@ -50,7 +52,7 @@ public class JdbcRoleDao implements RoleDao{
     }
 
     public void update(Role role) throws PersistentException {
-        try (Connection conn = this.jdbc.createConnection()){
+        try (Connection conn = this.ds.getConnection()){
 
             conn.setAutoCommit(false);
 
@@ -70,7 +72,7 @@ public class JdbcRoleDao implements RoleDao{
     }
 
     public void remove(Role role) throws PersistentException {
-        try (Connection conn = this.jdbc.createConnection()){
+        try (Connection conn = this.ds.getConnection()){
 
             conn.setAutoCommit(false);
 
@@ -92,7 +94,7 @@ public class JdbcRoleDao implements RoleDao{
 
         Role role = null;
 
-        try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_NAME_SQL)){
+        try (Connection conn = this.ds.getConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_NAME_SQL)){
             stmt.setString(1, name);
 
             role = getRoleFromResultSet(stmt.executeQuery());
@@ -108,7 +110,7 @@ public class JdbcRoleDao implements RoleDao{
 
         Role role = null;
 
-        try (Connection conn = this.jdbc.createConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID_SQL)){
+        try (Connection conn = this.ds.getConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID_SQL)){
             stmt.setLong(1, id);
 
             role = getRoleFromResultSet(stmt.executeQuery());

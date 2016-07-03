@@ -2,10 +2,8 @@ package com.lofitskyi.repository;
 
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
-import com.lofitskyi.service.PersistentException;
-import com.lofitskyi.service.UserDao;
-import com.lofitskyi.service.jdbc.JdbcRoleDao;
-import com.lofitskyi.service.jdbc.JdbcUserDao;
+import com.lofitskyi.repository.jdbc.JdbcRoleRepository;
+import com.lofitskyi.repository.jdbc.JdbcUserRepository;
 import com.lofitskyi.utils.DataSourceTestAdapter;
 import org.dbunit.Assertion;
 import org.dbunit.IDatabaseTester;
@@ -53,16 +51,16 @@ public class UserDaoTest {
     @Test
     public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedEmail(){
         try {
-            new JdbcUserDao(new DataSourceTestAdapter(tester)).findByEmail("not_email");
+            new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByEmail("not_email");
             Assert.assertTrue("Should throw PersistentException", false);
         } catch (PersistentException e) {
-            Assert.assertTrue(e.getCause() instanceof JdbcUserDao.NoSuchUserException);
+            Assert.assertTrue(e.getCause() instanceof JdbcUserRepository.NoSuchUserException);
         }
     }
 
     @Test
     public void shouldFoundUserByEmail() throws PersistentException {
-        User user = new JdbcUserDao(new DataSourceTestAdapter(tester)).findByEmail("email1");
+        User user = new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByEmail("email1");
 
         Assert.assertEquals("user1", user.getLogin());
     }
@@ -70,38 +68,38 @@ public class UserDaoTest {
     @Test
     public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedLogin(){
         try {
-            new JdbcUserDao(new DataSourceTestAdapter(tester)).findByLogin("not_login");
+            new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByLogin("not_login");
             Assert.assertTrue("Should throw PersistentException", false);
         } catch (PersistentException e) {
-            Assert.assertTrue(e.getCause() instanceof JdbcUserDao.NoSuchUserException);
+            Assert.assertTrue(e.getCause() instanceof JdbcUserRepository.NoSuchUserException);
         }
     }
 
     @Test
     public void shouldFoundUserByLogin() throws PersistentException {
-        User user = new JdbcUserDao(new DataSourceTestAdapter(tester)).findByLogin("user2");
+        User user = new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByLogin("user2");
 
         Assert.assertEquals("email2", user.getEmail());
     }
 
     @Test
     public void shouldRemoveRow() throws PersistentException {
-        User user = new JdbcUserDao(new DataSourceTestAdapter(tester)).findByLogin("user2");
+        User user = new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByLogin("user2");
 
-        new JdbcUserDao(new DataSourceTestAdapter(tester)).remove(user);
+        new JdbcUserRepository(new DataSourceTestAdapter(tester)).remove(user);
 
         try {
-            new JdbcUserDao(new DataSourceTestAdapter(tester)).findByLogin("user2");
+            new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByLogin("user2");
             Assert.assertTrue("Should throw PersistentException", false);
         } catch (PersistentException e) {
-            Assert.assertTrue(e.getCause() instanceof JdbcUserDao.NoSuchUserException);
+            Assert.assertTrue(e.getCause() instanceof JdbcUserRepository.NoSuchUserException);
         }
     }
 
     @Test
     public void shouldPersistAndFlushOnCreate() throws Exception {
-        dao = new JdbcUserDao(new DataSourceTestAdapter(tester));
-        Role adminRole = new JdbcRoleDao(new DataSourceTestAdapter(tester)).findByName("admin");
+        dao = new JdbcUserRepository(new DataSourceTestAdapter(tester));
+        Role adminRole = new JdbcRoleRepository(new DataSourceTestAdapter(tester)).findByName("admin");
         User user = new User("new_user", "new_pass", "new_email", "new_f_name", "new_surname", new Date(95, 0, 1), adminRole);
 
         dao.create(user);
@@ -118,7 +116,7 @@ public class UserDaoTest {
 
     @Test
     public void shouldUpdateRow() throws Exception {
-        dao = new JdbcUserDao(new DataSourceTestAdapter(tester));
+        dao = new JdbcUserRepository(new DataSourceTestAdapter(tester));
         User user = dao.findByLogin("user1");
         user.setLogin("upd_user");
 
@@ -136,7 +134,7 @@ public class UserDaoTest {
 
     @Test
     public void shouldFetchAllUsersOnFindAll() throws Exception {
-        final List<User> users = new JdbcUserDao(new DataSourceTestAdapter(tester)).findAll();
+        final List<User> users = new JdbcUserRepository(new DataSourceTestAdapter(tester)).findAll();
 
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()

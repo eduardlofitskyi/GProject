@@ -12,18 +12,16 @@
     </head>
         <div id="container">
             <div id="signin-container" class="container">
-                <form name="f" method="post" action="${loginUrl}">
-                    <input name="_csrf" type="hidden" value="6829b1ae-0a14-4920-aac4-5abbd7eeb9ee" />
+                <form name="f" method="post" action="/login">
                     <fieldset>
-
                         <div class="form-group">
                             <label class="form-control" for="login_field">Login: </label><br>
                             <label class="form-control" for="pass_field">Password: </label>
                         </div>
 
                         <div class="form-group">
-                            <input id="login_field"  class="form-control" type="text" name="j_username" placeholder="Email address" required autofocus><br>
-                            <input id="pass_field" class="form-control" type="password" name="j_password" placeholder="Password" required>
+                            <input id="login_field"  class="form-control" type="text" name="username" placeholder="Email address" required autofocus><br>
+                            <input id="pass_field" class="form-control" type="password" name="password" placeholder="Password" required>
                         </div>
 
                         <button class="btn-submit" type="submit">Sign In</button>

@@ -24,7 +24,7 @@ import java.util.Properties;
 @EnableJpaRepositories("com.lofitskyi.repository")
 @ComponentScan("com.lofitskyi")
 @PropertySource("classpath:db.properties")
-public class DBConfig {
+public class DatabaseConfig {
 
     @Resource
     Environment env;
