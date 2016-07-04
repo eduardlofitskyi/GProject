@@ -4,10 +4,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%--<c:if test="${sessionScope.user.role.name ne 'admin'}">--%>
-<%--<c:redirect url="home.jsp"/>--%>
+<%--<c:redirect url="user.jsp"/>--%>
 <%--</c:if>--%>
 <%--<c:if test="${empty param.type}">--%>
-<%--<c:redirect url="home.jsp"/>--%>
+<%--<c:redirect url="user.jsp"/>--%>
 <%--</c:if>--%>
 
 <html>

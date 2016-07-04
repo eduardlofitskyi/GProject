@@ -1,4 +1,4 @@
-package com.lofitskyi.controller;
+package com.lofitskyi.util;
 
 import com.lofitskyi.repository.PersistentException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

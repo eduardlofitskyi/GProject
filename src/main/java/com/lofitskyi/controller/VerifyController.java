@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @Controller
-public class AdminVerifyController {
+public class VerifyController {
 
     @Autowired
     private UserService dao;
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String userPage(){
+        return "user";
+    }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage(Model model){

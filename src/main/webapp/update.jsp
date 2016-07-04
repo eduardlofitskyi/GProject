@@ -21,7 +21,7 @@
     <div id="edit-container">
         <form:form method="post" action="/upd" commandName="user">
             <form:hidden path="id" name="id" value="${param.id}"/>
-            <div class="block">
+            <div class ="block">
                 <label>Login</label>
                 <form:input path="login" type="text" name="login_showed" value="${requestScope.editUser.login}" readonly="true"/>
             </div>

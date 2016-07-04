@@ -1,5 +1,7 @@
 package com.lofitskyi.config;
 
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +25,14 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         resolver.setSuffix(".jsp");
         resolver.setExposeContextBeansAsAttributes(true);
         return resolver;
+    }
+
+    @Bean
+    public ReCaptcha reCaptcha(){
+        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+        reCaptcha.setPublicKey("6LcrNiQTAAAAALVwnMRwwMjHQ2oG43EFglZnVQMQ");
+        reCaptcha.setPrivateKey("6LcrNiQTAAAAAPqlUXKd74DI_OFhPr1PryF_Fbgl");
+        return reCaptcha;
     }
 
     @Override

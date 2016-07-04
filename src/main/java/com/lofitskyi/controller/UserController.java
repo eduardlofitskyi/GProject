@@ -4,6 +4,8 @@ import com.lofitskyi.entity.User;
 import com.lofitskyi.repository.PersistentException;
 import com.lofitskyi.service.RoleService;
 import com.lofitskyi.service.UserService;
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -24,6 +27,9 @@ public class UserController {
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    private ReCaptcha reCaptchaService;
 
     @ModelAttribute("user")
     public User getUserObject() {
@@ -95,5 +101,26 @@ public class UserController {
         }
 
         return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String signUp(ServletRequest request,
+                         @Valid User user,
+                         Errors errors) throws SQLException, PersistentException {
+
+        if (errors.hasErrors()) return "signup";
+
+        String challenge = request.getParameter("recaptcha_challenge_field");
+        String response = request.getParameter("recaptcha_response_field");
+        String remoteAddr = request.getRemoteAddr();
+
+        ReCaptchaResponse reCaptchaResponse = reCaptchaService.checkAnswer(remoteAddr, challenge, response);
+
+        if(reCaptchaResponse.isValid()) {
+            dao.create(user);
+            return "redirect:/index";
+        } else {
+            return "signup";
+        }
     }
 }
