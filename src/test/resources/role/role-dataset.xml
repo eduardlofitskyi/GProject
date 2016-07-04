@@ -1,5 +1,5 @@
 <dataset>
-    <ROLE NAME="admin"/>
-    <ROLE NAME="user"/>
-    <ROLE NAME="guest"/>
+    <ROLE ID="1" NAME="admin"/>
+    <ROLE ID="2" NAME="user"/>
+    <ROLE ID="3" NAME="guest"/>
 </dataset>

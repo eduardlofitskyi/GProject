@@ -1,4 +1,4 @@
-package com.lofitskyi.service.impl;
+package com.lofitskyi.service.springdata;
 
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.repository.springdata.RoleRepository;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class HibernateRoleService implements RoleService {
+public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleRepository repository;

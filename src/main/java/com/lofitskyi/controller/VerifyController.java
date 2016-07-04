@@ -15,7 +15,14 @@ import java.util.List;
 public class VerifyController {
 
     @Autowired
-    private UserService dao;
+    private UserService service;
+
+    public VerifyController() {
+    }
+
+    public VerifyController(UserService service){
+        this.service = service;
+    }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String userPage(){
@@ -25,7 +32,7 @@ public class VerifyController {
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage(Model model){
         try {
-            final List<User> users = dao.findAll();
+            final List<User> users = service.findAll();
             model.addAttribute("userList", users);
         } catch (PersistentException e) {
             return "error";

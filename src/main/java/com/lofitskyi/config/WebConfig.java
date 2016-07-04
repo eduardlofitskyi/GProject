@@ -21,7 +21,6 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     public ViewResolver viewResolver(){
         InternalResourceViewResolver resolver =
                 new InternalResourceViewResolver();
-        resolver.setPrefix("./");
         resolver.setSuffix(".jsp");
         resolver.setExposeContextBeansAsAttributes(true);
         return resolver;

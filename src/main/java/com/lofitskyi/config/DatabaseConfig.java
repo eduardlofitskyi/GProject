@@ -1,6 +1,11 @@
 package com.lofitskyi.config;
 
+import com.lofitskyi.service.RoleService;
+import com.lofitskyi.service.springdata.RoleServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.dbunit.DataSourceDatabaseTester;
+import org.dbunit.IDatabaseTester;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -30,6 +35,7 @@ public class DatabaseConfig {
     Environment env;
 
     @Bean
+    @Primary
     public DataSource dataSource() {
         BasicDataSource ds = new BasicDataSource();
         ds.setUrl(env.getRequiredProperty("db.url"));
@@ -48,7 +54,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    @Profile("dev")
+    @Profile("test")
     public DataSource embeddedDataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)

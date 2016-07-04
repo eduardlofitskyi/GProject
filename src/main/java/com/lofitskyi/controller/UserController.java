@@ -23,13 +23,25 @@ import java.sql.SQLException;
 public class UserController {
 
     @Autowired
-    UserService dao;
+    UserService service;
 
     @Autowired
     RoleService roleService;
 
     @Autowired
     private ReCaptcha reCaptchaService;
+
+    public UserController() {
+    }
+
+    public UserController(UserService service) {
+        this.service = service;
+    }
+
+    public UserController(UserService service, ReCaptcha reCaptcha){
+        this.service = service;
+        this.reCaptchaService = reCaptcha;
+    }
 
     @ModelAttribute("user")
     public User getUserObject() {
@@ -44,7 +56,7 @@ public class UserController {
             case "edit":
                 User user = null;
                 try {
-                    user = dao.findById(id);
+                    user = service.findById(id);
                 } catch (PersistentException e) {
                     return "error";
                 }
@@ -67,7 +79,7 @@ public class UserController {
         if (errors.hasErrors()) return "add";
 
         try {
-            dao.create(user);
+            service.create(user);
         } catch (PersistentException | SQLException e) {
             return "error";
         }
@@ -81,7 +93,7 @@ public class UserController {
         if (errors.hasErrors()) return "update";
 
         try {
-            dao.update(user);
+            service.update(user);
         } catch (PersistentException e) {
             return "error";
         }
@@ -95,7 +107,7 @@ public class UserController {
         User user = new User();
         user.setId(id);
         try {
-            dao.remove(user);
+            service.remove(user);
         } catch (PersistentException e) {
             return "error";
         }
@@ -117,7 +129,7 @@ public class UserController {
         ReCaptchaResponse reCaptchaResponse = reCaptchaService.checkAnswer(remoteAddr, challenge, response);
 
         if(reCaptchaResponse.isValid()) {
-            dao.create(user);
+            service.create(user);
             return "redirect:/index";
         } else {
             return "signup";

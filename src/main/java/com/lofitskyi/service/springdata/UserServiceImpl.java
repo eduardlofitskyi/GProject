@@ -1,4 +1,4 @@
-package com.lofitskyi.service.impl;
+package com.lofitskyi.service.springdata;
 
 import com.lofitskyi.entity.User;
 import com.lofitskyi.repository.springdata.UserRepository;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class HibernateUserService implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repository;
