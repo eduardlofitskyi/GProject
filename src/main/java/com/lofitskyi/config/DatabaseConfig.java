@@ -62,6 +62,14 @@ public class DatabaseConfig {
     }
 
     @Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager manager = new JpaTransactionManager();
+        manager.setEntityManagerFactory(entityManagerFactory().getObject());
+
+        return manager;
+    }
+
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
@@ -70,14 +78,6 @@ public class DatabaseConfig {
         em.setJpaProperties(getHibernateProperties());
 
         return em;
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager() {
-        JpaTransactionManager manager = new JpaTransactionManager();
-        manager.setEntityManagerFactory(entityManagerFactory().getObject());
-
-        return manager;
     }
 
     private Properties getHibernateProperties() {

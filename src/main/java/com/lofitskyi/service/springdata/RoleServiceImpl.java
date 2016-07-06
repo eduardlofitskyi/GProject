@@ -14,6 +14,13 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository repository;
 
+    public RoleServiceImpl() {
+    }
+
+    public RoleServiceImpl(RoleRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     @Transactional
     public void create(Role role) throws PersistentException {

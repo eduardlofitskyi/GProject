@@ -17,6 +17,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
+    public UserServiceImpl() {
+    }
+
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     @Transactional
     public void create(User user) throws SQLException, PersistentException {

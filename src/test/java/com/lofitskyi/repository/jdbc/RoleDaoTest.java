@@ -1,6 +1,8 @@
-package com.lofitskyi.repository;
+package com.lofitskyi.repository.jdbc;
 
 import com.lofitskyi.entity.Role;
+import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.repository.RoleDao;
 import com.lofitskyi.repository.jdbc.JdbcRoleRepository;
 import com.lofitskyi.utils.DataSourceTestAdapter;
 import org.dbunit.Assertion;

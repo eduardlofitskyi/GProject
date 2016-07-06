@@ -1,6 +1,7 @@
 package com.lofitskyi.controller;
 
 import com.lofitskyi.entity.User;
+import com.lofitskyi.repository.PersistentException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +40,15 @@ public class HomeController {
     @RequestMapping(value = "/signupform", method = RequestMethod.GET)
     public String signup(){
         return "signup";
+    }
+
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public String error(){
+        return "error";
+    }
+
+    @RequestMapping(value = "/throw")
+    public String throwss() throws PersistentException {
+        throw new PersistentException();
     }
 }

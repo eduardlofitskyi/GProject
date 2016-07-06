@@ -1,7 +1,9 @@
-package com.lofitskyi.repository;
+package com.lofitskyi.repository.jdbc;
 
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
+import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.repository.UserDao;
 import com.lofitskyi.repository.jdbc.JdbcRoleRepository;
 import com.lofitskyi.repository.jdbc.JdbcUserRepository;
 import com.lofitskyi.utils.DataSourceTestAdapter;
@@ -60,7 +62,7 @@ public class UserDaoTest {
 
     @Test
     public void shouldFoundUserByEmail() throws PersistentException {
-        User user = new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByEmail("email1");
+        User user = new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByEmail("email1@mail.com");
 
         Assert.assertEquals("user1", user.getLogin());
     }
@@ -100,7 +102,7 @@ public class UserDaoTest {
     public void shouldPersistAndFlushOnCreate() throws Exception {
         dao = new JdbcUserRepository(new DataSourceTestAdapter(tester));
         Role adminRole = new JdbcRoleRepository(new DataSourceTestAdapter(tester)).findByName("admin");
-        User user = new User("new_user", "new_pass", "new_email", "new_f_name", "new_surname", new Date(95, 0, 1), adminRole);
+        User user = new User("new_user", "new_pass", "new_email@mail.com", "new_f_name", "new_surname", new Date(95, 0, 1), adminRole);
 
         dao.create(user);
 

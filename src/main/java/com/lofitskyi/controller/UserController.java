@@ -1,5 +1,6 @@
 package com.lofitskyi.controller;
 
+import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
 import com.lofitskyi.repository.PersistentException;
 import com.lofitskyi.service.RoleService;
@@ -7,6 +8,8 @@ import com.lofitskyi.service.UserService;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -38,8 +41,14 @@ public class UserController {
         this.service = service;
     }
 
-    public UserController(UserService service, ReCaptcha reCaptcha){
+    public UserController(UserService service, ReCaptcha reCaptcha) {
         this.service = service;
+        this.reCaptchaService = reCaptcha;
+    }
+
+    public UserController(UserService service, RoleService roleService, ReCaptcha reCaptcha) {
+        this.service = service;
+        this.roleService = roleService;
         this.reCaptchaService = reCaptcha;
     }
 
@@ -48,18 +57,17 @@ public class UserController {
         return new User();
     }
 
+    @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/change", method = RequestMethod.GET)
     public String changeTypeResolver(@RequestParam(value = "type") String type,
-                             @RequestParam(value = "id", required = false) Long id,
-                             Model model){
-        switch (type){
+                                     @RequestParam(value = "id", required = false) Long id,
+                                     Model model) throws PersistentException {
+        switch (type) {
             case "edit":
                 User user = null;
-                try {
-                    user = service.findById(id);
-                } catch (PersistentException e) {
-                    return "error";
-                }
+
+                user = service.findById(id);
+
 
                 model.addAttribute("editUser", user);
                 return "update";
@@ -73,44 +81,47 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String createUser(@Valid User user, Errors errors){
+    public String createUser(@Valid User user, Errors errors) throws PersistentException {
 
         if (errors.hasErrors()) return "add";
 
+        Role role = roleService.findByName(user.getRole().getName());
+        user.setRole(role);
+
         try {
             service.create(user);
-        } catch (PersistentException | SQLException e) {
-            return "error";
+        } catch (SQLException e) {
+            return "redirect:/error";
         }
 
         return "redirect:/admin";
     }
 
+    @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/upd", method = RequestMethod.POST)
-    public String updateUser(@Valid User user, Errors errors){
+    public String updateUser(@Valid User user, Errors errors) throws PersistentException {
 
         if (errors.hasErrors()) return "update";
 
-        try {
-            service.update(user);
-        } catch (PersistentException e) {
-            return "error";
-        }
+        Role role = roleService.findByName(user.getRole().getName());
+        user.setRole(role);
+
+        service.update(user);
 
         return "redirect:/admin";
     }
 
+    @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/del", method = RequestMethod.GET)
-    public String removeUser(@RequestParam(value = "id") Long id){
+    public String removeUser(@RequestParam(value = "id") Long id) throws PersistentException {
 
         User user = new User();
         user.setId(id);
-        try {
-            service.remove(user);
-        } catch (PersistentException e) {
-            return "error";
-        }
+
+        service.remove(user);
+
 
         return "redirect:/admin";
     }
@@ -128,7 +139,10 @@ public class UserController {
 
         ReCaptchaResponse reCaptchaResponse = reCaptchaService.checkAnswer(remoteAddr, challenge, response);
 
-        if(reCaptchaResponse.isValid()) {
+        if (reCaptchaResponse.isValid()) {
+            Role role = roleService.findByName(user.getRole().getName());
+            user.setRole(role);
+
             service.create(user);
             return "redirect:/index";
         } else {

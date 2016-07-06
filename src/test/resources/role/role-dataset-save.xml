@@ -1,6 +1,6 @@
 <dataset>
-    <ROLE ID="1" NAME="admin"/>
-    <ROLE ID="2" NAME="user"/>
-    <ROLE ID="3" NAME="guest"/>
-    <ROLE ID="4" NAME="new_role"/>
+    <ROLE NAME="admin"/>
+    <ROLE NAME="user"/>
+    <ROLE NAME="guest"/>
+    <ROLE NAME="new_role"/>
 </dataset>

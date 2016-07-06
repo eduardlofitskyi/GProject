@@ -14,7 +14,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-    private static final int ONE_WEEK = 2_419_200;
+    private static final int TEN_MINUTES = 600;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
                 .antMatchers("/admin", "/change**").hasRole("admin")
                 .antMatchers("/user").hasRole("user")
+                .antMatchers("/home", "/login").anonymous()
                 .anyRequest().permitAll()
                 .and();
 
@@ -38,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .failureUrl("/login?error=t")
                 .and()
                     .rememberMe()
-                    .tokenValiditySeconds(ONE_WEEK)
+                    .tokenValiditySeconds(TEN_MINUTES)
                     .key("gKey");
 
         http.logout()

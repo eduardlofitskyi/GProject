@@ -1,69 +1,60 @@
 package com.lofitskyi.service.springdata;
 
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
-import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
-import com.lofitskyi.config.DatabaseConfig;
 import com.lofitskyi.entity.Role;
-import com.lofitskyi.repository.PersistentException;
 import com.lofitskyi.repository.springdata.RoleRepository;
-import org.junit.Assert;
+import com.lofitskyi.service.RoleService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = DatabaseConfig.class)
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
-@WebAppConfiguration
+import static org.mockito.Mockito.*;
+
+@RunWith(MockitoJUnitRunner.class)
 public class RoleServiceImplTest {
 
+    private static final String DUMMY_ROLE_STR = "ROLE_";
+    private static final Role DUMMY_ROLE = new Role(1L, DUMMY_ROLE_STR);
 
-    @Autowired
-    private RoleRepository repository;
+    private RoleService service;
 
-    @Test
-    @DatabaseSetup("/role/role-dataset.xml")
-    public void shouldFindRoleByName() throws PersistentException {
-        final Role role = repository.findByName("admin");
-        Assert.assertEquals("admin", role.getName());
+    @Mock
+    RoleRepository repository;
+
+    @Before
+    public void setUp() throws Exception {
+        service = new RoleServiceImpl(repository);
     }
 
     @Test
-    @DatabaseSetup("/role/role-dataset.xml")
-    public void shouldThrowExceptionWhenTryFindNonPresentedRole() throws PersistentException {
-        Assert.assertNull(repository.findByName("NINJA"));
+    public void create() throws Exception {
+        service.create(DUMMY_ROLE);
+
+        verify(repository, only()).saveAndFlush(DUMMY_ROLE);
     }
 
     @Test
-    @DatabaseSetup("/role/role-dataset.xml")
-    @ExpectedDatabase(value = "/role/role-dataset-save.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
-    public void shouldCreateNewRole() throws PersistentException {
-        Role newRole = new Role("new_role");
-        repository.saveAndFlush(newRole);
+    public void update() throws Exception {
+        service.update(DUMMY_ROLE);
+
+        verify(repository, only()).saveAndFlush(DUMMY_ROLE);
     }
 
     @Test
-    @DatabaseSetup("/role/role-dataset.xml")
-    @ExpectedDatabase(value = "/role/role-dataset-update.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
-    public void shouldUpdateRole() throws PersistentException {
-        Role updatedRole = repository.findByName("admin");
-        updatedRole.setName("super_admin");
-        repository.saveAndFlush(updatedRole);
+    public void remove() throws Exception {
+        service.remove(DUMMY_ROLE);
+
+        verify(repository, only()).delete(DUMMY_ROLE);
     }
 
     @Test
-    @DatabaseSetup("/role/role-dataset.xml")
-    public void shouldRemoveRole() throws PersistentException {
-        Role updatedRole = repository.findByName("admin");
-        repository.delete(updatedRole);
+    public void findByName() throws Exception {
+        when(repository.findByName(DUMMY_ROLE_STR)).thenReturn(DUMMY_ROLE);
 
-        Assert.assertNull(repository.findByName("admin"));
+        service.findByName(DUMMY_ROLE_STR);
+
+        verify(repository, only()).findByName(DUMMY_ROLE_STR);
     }
+
 }

@@ -59,7 +59,7 @@ public class User {
     private Date birthday;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 

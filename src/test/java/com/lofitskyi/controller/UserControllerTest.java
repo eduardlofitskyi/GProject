@@ -2,6 +2,7 @@ package com.lofitskyi.controller;
 
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
+import com.lofitskyi.service.RoleService;
 import com.lofitskyi.service.UserService;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaResponse;
@@ -10,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -37,6 +37,8 @@ public class UserControllerTest {
     UserService userServiceMock;
     @Mock
     ReCaptcha reCaptcha;
+    @Mock
+    RoleService roleService;
 
     @Before
     public void setUp() throws Exception {
@@ -44,7 +46,7 @@ public class UserControllerTest {
         viewResolver.setPrefix("./");
         viewResolver.setSuffix(".jsp");
 
-        mockMvc = MockMvcBuilders.standaloneSetup(new UserController(userServiceMock, reCaptcha))
+        mockMvc = MockMvcBuilders.standaloneSetup(new UserController(userServiceMock, roleService, reCaptcha))
                 .setViewResolvers(viewResolver)
                 .build();
     }
@@ -96,7 +98,7 @@ public class UserControllerTest {
         )
                 .andExpect(view().name("add"));
 
-        verify(userServiceMock, times(0)).create(any());
+        verify(userServiceMock, never()).create(any());
     }
 
     @Test
@@ -113,7 +115,7 @@ public class UserControllerTest {
         )
                 .andExpect(redirectedUrl("/admin"));
 
-        verify(userServiceMock, times(1)).update(any());
+        verify(userServiceMock, only()).update(any());
     }
 
     @Test
@@ -130,7 +132,7 @@ public class UserControllerTest {
         )
                 .andExpect(view().name("update"));
 
-        verify(userServiceMock, times(0)).update(any());
+        verify(userServiceMock, never()).update(any());
     }
 
 
@@ -178,7 +180,7 @@ public class UserControllerTest {
                 .andExpect(view().name("signup"));
 
 
-        verify(userServiceMock, times(0)).create(any());
+        verify(userServiceMock, never()).create(any());
     }
 
     @Test
@@ -195,7 +197,7 @@ public class UserControllerTest {
         )
                 .andExpect(view().name("signup"));
 
-        verify(userServiceMock, times(0)).create(any());
+        verify(userServiceMock, never()).create(any());
     }
 
 
