@@ -54,16 +54,12 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @NotNull
-    @Past(message = "You haven't been born yet;) Are you sure?")
     private Date birthday;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    //for JPA only
     public User() {
     }
 

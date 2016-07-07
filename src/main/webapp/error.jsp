@@ -4,6 +4,6 @@
     <title>Error</title>
 </head>
 <body>
-    <h1>Something went wrong! Go <a href="/home">home</a> and try again!</h1>
+    <h1>Something went wrong! Go <a href="home.jsp">home</a> and try again!</h1>
 </body>
 </html>

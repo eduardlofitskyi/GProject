@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+    <constant name="struts.devMode" value="true" />
+
+    <package name="default" extends="jsr303">
+        <default-interceptor-ref name="jsr303ValidationStack"/>
+
+        <action name="onLogin">
+            <result>/login.jsp</result>
+        </action>
+
+        <action name="">
+            <result>/home.jsp</result>
+        </action>
+
+        <action name="index" class="loginActionBean" method="execute">
+            <result name="success">/login.jsp</result>
+        </action>
+
+        <action name="del" class="removeActionBean" method="execute">
+            <result name="success" type="redirect">/admin</result>
+        </action>
+
+        <action name="add" class="addNewActionBean" method="execute">
+            <result name="success" type="redirect">/admin</result>
+            <result name="input">/add.jsp</result>
+        </action>
+
+        <action name="upd" class="updateActionBean" method="execute">
+            <result name="success" type="redirect">/admin</result>
+            <result name="input">/update.jsp</result>
+        </action>
+
+        <action name="signup" class="signUpActionBean" method="execute">
+            <result name="success">/home.jsp</result>
+            <result name="input">/signup.jsp</result>
+        </action>
+
+        <action name="admin" class="adminActionBean" method="execute">
+            <result name="success">/admin.jsp</result>
+        </action>
+
+        <action name="user" class="userActionBean" method="execute">
+            <result name="success">/user.jsp</result>
+        </action>
+
+        <action name="change" class="changeActionBean" method="execute">
+            <result name="add">/add.jsp</result>
+            <result name="update">/update.jsp</result>
+
+            <result name="error" type="redirect">/admin</result>
+
+            <result name="success">/add.jsp</result>  <!--required, but needn't-->
+        </action>
+
+    </package>
+
+</struts>

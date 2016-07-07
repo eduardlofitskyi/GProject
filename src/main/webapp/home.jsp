@@ -10,7 +10,7 @@
 <body>
     <div id="container" class="align-center">
         <h1>Hello</h1>
-        <h3><a href="/login">Sign in</a>  or <a href="/signupform">sign up</a></h3>
+        <h3><a href="/index">Sign in</a>  or <a href="/signup.jsp">sign up</a></h3>
     </div>
 </body>
 </html>

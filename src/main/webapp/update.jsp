@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 
 <html>
 <head>
@@ -16,64 +17,24 @@
 
 <div id="container">
 
-    <h1>Add user</h1>
+    <h1>Edit  user</h1>
 
     <div id="edit-container">
-        <form:form method="post" action="/upd" commandName="user">
-            <form:hidden path="id" name="id" value="${param.id}"/>
-            <div class ="block">
-                <label>Login</label>
-                <form:input path="login" type="text" name="login_showed" value="${requestScope.editUser.login}" readonly="true"/>
-            </div>
-            <div class="block">
-                <label>Password</label>
-                <form:input path="password" id="password" type="password" name="password" onkeyup="validatePassword()" required="required"/>
-                <form:errors path="password"/>
-            </div>
-            <div class="block">
-                <label>Password again</label>
-                <input id="confirm_password" type="password" name="password_again" onkeyup="validatePassword()"
-                       required/>
-            </div>
-            <div class="block">
-                <label>E-mail</label>
-                <form:input path="email" type="text" name="email" value="${requestScope.editUser.email}" required="required"/>
-                <form:errors path="email"/>
-            </div>
-            <div class="block">
-                <label>First name</label>
-                <form:input path="firstName" type="text" name="firstName" value="${requestScope.editUser.firstName}" required="required"/>
-                <form:errors path="firstName"/>
-            </div>
-            <div class="block">
-                <label>Last name</label>
-                <form:input path="lastName" type="text" name="lastName" value="${requestScope.editUser.lastName}" required="required"/>
-                <form:errors path="lastName"/>
-            </div>
-            <div class="block">
-                <label>Birthday</label>
-                <form:input path="birthday" type="date" name="birthday" value="${requestScope.editUser.birthday}" required="required"/>
-                <form:errors path="birthday"/>
-            </div>
-            <div class="block">
-                <label>Role</label>
-                <form:select path="role" size="1" name="role">
-                    <c:if test="${requestScope.editUser.role.name eq 'admin'}">
-                        <form:option value="user">User</form:option>
-                        <form:option value="admin" selected="true">Admin</form:option>
-                    </c:if>
-                    <c:if test="${requestScope.editUser.role.name ne 'admin'}">
-                        <form:option value="user" selected="true">User</form:option>
-                        <form:option value="admin">Admin</form:option>
-                    </c:if>
+        <s:form action="upd" method="POST">
 
-                </form:select>
-            </div>
-            <div class="block">
-                <form:button path="sbm_btn" id="sbm_btn" type="submit" disabled="true">Ok</form:button>
-                <form:button path="clean_btn" type="reset">Cancel</form:button> //button 'Ok' will enable if password and password again match
-            </div>
-        </form:form>
+            <s:hidden name="id" label="Id"/>
+            <s:textfield name="login" label="Login " pattern="[0-9a-zA-Z]{5,50}" required="true" readonly="true"/>
+            <s:password id="password" name="password" pattern="[0-9a-zA-Z]{6,50}" label="Password " onkeyup="validatePassword()" required="true"/>
+            <s:password id="confirm_password" label="Confirm password" onkeyup="validatePassword()"/>
+            <s:textfield name="email" label="E-mail " pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" required="true"/>
+            <s:textfield name="firstName" pattern="[A-Za-z]{1,50}" label="First Name " required="true"/>
+            <s:textfield name="lastName" pattern="[A-Za-z]{1,50}" label="Last Name" required="true"/>
+            <s:textfield name="birthday" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" label="Birthday " format="yyyy-MM-dd" required="true"/>
+            <s:select name="role"  label="Role "   list="#{'user':'user','admin':'admin'}"/>
+
+            <s:submit id="sbm_btn" disabled="true"/>
+
+        </s:form>
     </div>
 </div>
 </body>

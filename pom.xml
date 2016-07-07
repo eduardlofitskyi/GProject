@@ -94,6 +94,22 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring-framework.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-core</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-bean-validation-plugin</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.umeshawasthi</groupId>
+            <artifactId>struts2-jsr303-validation-plugin</artifactId>
+            <version>1.0</version>
+        </dependency>
+
 
         <!--SPRING-->
         <dependency>
@@ -101,6 +117,12 @@
             <artifactId>spring-context</artifactId>
             <version>${spring-framework.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-spring-plugin</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+
 
         <!--DB-->
         <dependency>
@@ -223,8 +245,16 @@
             <artifactId>spring-test-dbunit</artifactId>
             <version>${spring-test-dbunit.version}</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>1.6.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>1.6.5</version>
+        </dependency>
 
 
     </dependencies>

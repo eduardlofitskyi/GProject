@@ -2,6 +2,8 @@ package com.lofitskyi.config;
 
 import com.lofitskyi.service.RoleService;
 import com.lofitskyi.service.springdata.RoleServiceImpl;
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.dbunit.DataSourceDatabaseTester;
 import org.dbunit.IDatabaseTester;
@@ -78,6 +80,14 @@ public class DatabaseConfig {
         em.setJpaProperties(getHibernateProperties());
 
         return em;
+    }
+
+    @Bean
+    public ReCaptcha reCaptcha(){
+        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+        reCaptcha.setPublicKey("6LcrNiQTAAAAALVwnMRwwMjHQ2oG43EFglZnVQMQ");
+        reCaptcha.setPrivateKey("6LcrNiQTAAAAAPqlUXKd74DI_OFhPr1PryF_Fbgl");
+        return reCaptcha;
     }
 
     private Properties getHibernateProperties() {
