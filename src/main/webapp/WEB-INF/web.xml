@@ -30,12 +30,43 @@
     </servlet-mapping>
 
     <jsp-config>
-    <taglib>
-        <taglib-uri>http://tomcat.apache.org/example-taglib</taglib-uri>
-        <taglib-location>/WEB-INF/userstable.tld</taglib-location>
-    </taglib>
+        <taglib>
+            <taglib-uri>http://tomcat.apache.org/example-taglib</taglib-uri>
+            <taglib-location>/WEB-INF/userstable.tld</taglib-location>
+        </taglib>
     </jsp-config>
 
+    <!--JBoss-->
+    <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/rest</param-value>
+    </context-param>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
+
+    </listener>
+
+    <servlet>
+        <servlet-name>RESTEasyService</servlet-name>
+        <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>com.lofitskyi.MainApplication</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RESTEasyService</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>
