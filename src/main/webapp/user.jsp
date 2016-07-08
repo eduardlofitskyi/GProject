@@ -13,9 +13,9 @@
 <body>
 <div id="container" class="align-center">
     <h1>Hello, ${principal.username}</h1>
-     <form action="/logout" method="post">
-         <button type="submit">Click here to logout</button>
-     </form>
+    <form action="/logout" method="post">
+        <button type="submit">Click here to logout</button>
+    </form>
 </div>
 </body>
 </html>

@@ -5,14 +5,18 @@
 
 <struts>
 
-    <constant name="struts.devMode" value="true" />
+    <constant name="struts.devMode" value="true"/>
 
     <package name="default" extends="jsr303">
         <default-interceptor-ref name="jsr303ValidationStack"/>
 
-        <action name="onLogin">
-            <result>/login.jsp</result>
-        </action>
+        <global-results>
+            <result name="persistent_exception">/error.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="com.lofitskyi.repository.PersistentException" result="persistent_exception"/>
+        </global-exception-mappings>
 
         <action name="">
             <result>/home.jsp</result>

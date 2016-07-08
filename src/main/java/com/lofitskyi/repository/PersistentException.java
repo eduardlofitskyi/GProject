@@ -3,7 +3,7 @@ package com.lofitskyi.repository;
 /**
  * Universal exception specific for DAO layer
  */
-public class PersistentException extends Exception{
+public class PersistentException extends Exception {
 
     public PersistentException() {
     }

@@ -4,7 +4,7 @@ import com.lofitskyi.entity.User;
 import com.lofitskyi.service.UserService;
 import com.opensymphony.xwork2.Action;
 
-public class ChangeAction implements Action{
+public class ChangeAction implements Action {
 
     private UserService service;
 

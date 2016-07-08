@@ -1,8 +1,8 @@
 package com.lofitskyi.repository.jdbc;
 
 import com.lofitskyi.entity.Role;
-import com.lofitskyi.repository.RoleDao;
 import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.repository.RoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,11 +33,11 @@ public class JdbcRoleRepository implements RoleDao {
     }
 
     public void create(Role role) throws PersistentException {
-        try (Connection conn = this.ds.getConnection()){
+        try (Connection conn = this.ds.getConnection()) {
 
             conn.setAutoCommit(false);
 
-            try (PreparedStatement stmt = conn.prepareStatement(CREATE_SQL)){
+            try (PreparedStatement stmt = conn.prepareStatement(CREATE_SQL)) {
                 stmt.setString(1, role.getName());
                 stmt.execute();
 
@@ -52,11 +52,11 @@ public class JdbcRoleRepository implements RoleDao {
     }
 
     public void update(Role role) throws PersistentException {
-        try (Connection conn = this.ds.getConnection()){
+        try (Connection conn = this.ds.getConnection()) {
 
             conn.setAutoCommit(false);
 
-            try( PreparedStatement stmt = conn.prepareStatement(UPDATE_SQL)) {
+            try (PreparedStatement stmt = conn.prepareStatement(UPDATE_SQL)) {
                 stmt.setString(1, role.getName());
                 stmt.setLong(2, role.getId());
                 stmt.execute();
@@ -72,11 +72,11 @@ public class JdbcRoleRepository implements RoleDao {
     }
 
     public void remove(Role role) throws PersistentException {
-        try (Connection conn = this.ds.getConnection()){
+        try (Connection conn = this.ds.getConnection()) {
 
             conn.setAutoCommit(false);
 
-            try (PreparedStatement stmt = conn.prepareStatement(DELETE_SQL)){
+            try (PreparedStatement stmt = conn.prepareStatement(DELETE_SQL)) {
                 stmt.setString(1, role.getName());
                 stmt.execute();
 
@@ -94,7 +94,7 @@ public class JdbcRoleRepository implements RoleDao {
 
         Role role = null;
 
-        try (Connection conn = this.ds.getConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_NAME_SQL)){
+        try (Connection conn = this.ds.getConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_NAME_SQL)) {
             stmt.setString(1, name);
 
             role = getRoleFromResultSet(stmt.executeQuery());
@@ -110,7 +110,7 @@ public class JdbcRoleRepository implements RoleDao {
 
         Role role = null;
 
-        try (Connection conn = this.ds.getConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID_SQL)){
+        try (Connection conn = this.ds.getConnection(); PreparedStatement stmt = conn.prepareStatement(FIND_BY_ID_SQL)) {
             stmt.setLong(1, id);
 
             role = getRoleFromResultSet(stmt.executeQuery());
@@ -126,7 +126,7 @@ public class JdbcRoleRepository implements RoleDao {
 
         Role role = new Role();
 
-        try(ResultSet resultSet = rs){
+        try (ResultSet resultSet = rs) {
             if (!resultSet.next()) throw new PersistentException(new NoSuchRoleException());
 
             role.setId(resultSet.getLong("id"));

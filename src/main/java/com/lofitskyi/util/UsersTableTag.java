@@ -30,7 +30,7 @@ public class UsersTableTag extends SimpleTagSupport {
                 "   </tr>");
 
 
-        for (User user: users){
+        for (User user : users) {
             out.println("<tr>");
             out.println("<td>" + user.getLogin() + "</td>");
             out.println("<td>" + user.getFirstName() + "</td>");

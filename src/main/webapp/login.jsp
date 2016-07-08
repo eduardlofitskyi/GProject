@@ -14,9 +14,9 @@
 <div id="container">
     <div id="signin-container" class="container">
         <s:form action="login" method="post">
-                    <s:textfield id="login_field" name="login" label="Username" size="20"/>
-                    <s:password id="pass_field" name="password" label="Password" size="20"/>
-                    <s:submit method="execute" align="right"/>
+            <s:textfield id="login_field" name="login" label="Username" size="20"/>
+            <s:password id="pass_field" name="password" label="Password" size="20"/>
+            <s:submit method="execute" align="right"/>
         </s:form>
         <c:if test="${not empty param.error}">
             <h5>Invalid credential! Try again</h5>

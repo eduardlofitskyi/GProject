@@ -4,15 +4,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class LoginRedirectActionTest {
-
+public class UserActionTest {
     private static final String SUCCESS_RESPONSE = "success";
 
-    private LoginRedirectAction action = new LoginRedirectAction();
+    private UserAction action = new UserAction();
 
     @Test
     public void execute() throws Exception {
         assertEquals(SUCCESS_RESPONSE, action.execute());
     }
-
 }

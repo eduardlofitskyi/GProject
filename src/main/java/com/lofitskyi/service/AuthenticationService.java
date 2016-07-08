@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AuthenticationService implements UserDetailsService{
+public class AuthenticationService implements UserDetailsService {
 
     private static final String ROLE_PREFIX = "ROLE_";
 

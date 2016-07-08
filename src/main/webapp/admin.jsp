@@ -13,11 +13,11 @@
     <link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div id="container">
-        <jsp:include page="adminbar.jsp" />
-        <a href="change?type=add">Add user</a>
+<div id="container">
+    <jsp:include page="adminbar.jsp"/>
+    <a href="change?type=add">Add user</a>
 
-        <ct:users collection="${requestScope.userList}" />
-    </div>
+    <ct:users collection="${requestScope.userList}"/>
+</div>
 </body>
 </html>

@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.lofitskyi"/>
-    <context:annotation-config />
+    <context:annotation-config/>
 
     <import resource="application-security.xml"/>
 
@@ -14,34 +14,34 @@
     </bean>
 
     <bean id="removeActionBean" class="com.lofitskyi.controller.struts2.RemoveUserAction">
-        <constructor-arg name="service" ref="userService" />
+        <constructor-arg name="service" ref="userService"/>
     </bean>
 
     <bean id="addNewActionBean" class="com.lofitskyi.controller.struts2.CreateNewUserAction">
-        <constructor-arg name="service" ref="userService" />
-        <constructor-arg name="roleService" ref="roleService" />
+        <constructor-arg name="service" ref="userService"/>
+        <constructor-arg name="roleService" ref="roleService"/>
     </bean>
 
     <bean id="updateActionBean" class="com.lofitskyi.controller.struts2.UpdateUserAction">
-        <constructor-arg name="service" ref="userService" />
-        <constructor-arg name="roleService" ref="roleService" />
+        <constructor-arg name="service" ref="userService"/>
+        <constructor-arg name="roleService" ref="roleService"/>
     </bean>
 
     <bean id="signUpActionBean" class="com.lofitskyi.controller.struts2.SignUpAction">
-        <constructor-arg name="service" ref="userService" />
-        <constructor-arg name="roleService" ref="roleService" />
-        <constructor-arg name="reCaptcha" ref="reCaptcha" />
+        <constructor-arg name="service" ref="userService"/>
+        <constructor-arg name="roleService" ref="roleService"/>
+        <constructor-arg name="reCaptcha" ref="reCaptcha"/>
     </bean>
 
     <bean id="adminActionBean" class="com.lofitskyi.controller.struts2.AdminAction">
-        <constructor-arg name="service" ref="userService" />
+        <constructor-arg name="service" ref="userService"/>
     </bean>
 
     <bean id="userActionBean" class="com.lofitskyi.controller.struts2.UserAction">
     </bean>
 
     <bean id="changeActionBean" class="com.lofitskyi.controller.struts2.ChangeAction">
-        <constructor-arg name="service" ref="userService" />
+        <constructor-arg name="service" ref="userService"/>
     </bean>
 
 

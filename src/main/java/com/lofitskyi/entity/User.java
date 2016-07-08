@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 
@@ -19,7 +18,7 @@ public class User {
     private Long id;
 
     @NotNull
-    @Size (
+    @Size(
             min = 5,
             max = 50,
             message = "Login must be between 6 - 50 characters length"
@@ -27,7 +26,7 @@ public class User {
     private String login;
 
     @NotNull
-    @Size (
+    @Size(
             min = 6,
             max = 50,
             message = "Password must be between 6 - 50 characters length"
@@ -39,7 +38,7 @@ public class User {
     private String email;
 
     @NotNull
-    @Size (
+    @Size(
             max = 50,
             message = "Too long name"
     )
@@ -47,7 +46,7 @@ public class User {
     private String firstName;
 
     @NotNull
-    @Size (
+    @Size(
             max = 50,
             message = "Too long surname"
     )

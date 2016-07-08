@@ -1,8 +1,8 @@
 package com.lofitskyi.service.springdata;
 
 import com.lofitskyi.entity.User;
-import com.lofitskyi.repository.springdata.UserRepository;
 import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.repository.springdata.UserRepository;
 import com.lofitskyi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

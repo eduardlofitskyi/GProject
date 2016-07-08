@@ -2,8 +2,8 @@ package com.lofitskyi.repository.jdbc;
 
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
-import com.lofitskyi.repository.UserDao;
 import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +27,7 @@ public class JdbcUserRepository implements UserDao {
             "WHERE id = ?";
 
     private static final String DELETE_SQL = "DELETE FROM USER WHERE login = ?";
-    private static final String DELETE_BY_ID_SQL= "DELETE FROM USER WHERE id = ?";
+    private static final String DELETE_BY_ID_SQL = "DELETE FROM USER WHERE id = ?";
     private static final String FIND_ALL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER";
     private static final String FIND_BY_LOGIN_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE login = ?";
     private static final String FIND_BY_EMAIL_SQL = "SELECT id, login, password, email, first_name, last_name, birthday, role_id FROM USER WHERE email = ?";

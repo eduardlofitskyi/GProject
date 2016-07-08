@@ -6,7 +6,7 @@ import com.opensymphony.xwork2.Action;
 
 import java.util.List;
 
-public class AdminAction implements Action{
+public class AdminAction implements Action {
 
     private UserService service;
     private List<User> userList;

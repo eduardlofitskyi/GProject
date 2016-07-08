@@ -28,9 +28,6 @@
           <element id="library" level="project" name="Maven: asm:asm:3.3" />
           <element id="library" level="project" name="Maven: asm:asm-commons:3.3" />
           <element id="library" level="project" name="Maven: asm:asm-tree:3.3" />
-          <element id="library" level="project" name="Maven: org.apache.struts:struts2-bean-validation-plugin:2.5.1" />
-          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.2" />
-          <element id="library" level="project" name="Maven: com.github.umeshawasthi:struts2-jsr303-validation-plugin:1.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.3.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.apache.struts:struts2-spring-plugin:2.5.1" />
           <element id="library" level="project" name="Maven: com.h2database:h2:1.4.192" />
@@ -69,6 +66,9 @@
           <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
           <element id="library" level="project" name="Maven: net.tanesha.recaptcha4j:recaptcha4j:0.0.7" />
           <element id="library" level="project" name="Maven: javax.el:javax.el-api:2.2.4" />
+          <element id="library" level="project" name="Maven: org.apache.struts:struts2-bean-validation-plugin:2.5.1" />
+          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.2" />
+          <element id="library" level="project" name="Maven: com.github.umeshawasthi:struts2-jsr303-validation-plugin:1.0" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:4.1.0.RELEASE" />
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:4.1.0.RELEASE" />
@@ -98,6 +98,7 @@
           <element id="library" level="project" name="Maven: org.objenesis:objenesis:2.1" />
           <element id="library" level="project" name="Maven: org.powermock:powermock-api-mockito-common:1.6.5" />
           <element id="library" level="project" name="Maven: org.powermock:powermock-api-support:1.6.5" />
+          <element id="library" level="project" name="Maven: org.apache.struts:struts2-junit-plugin:2.5.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

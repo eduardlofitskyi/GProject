@@ -28,7 +28,13 @@
         <hamcrest.version>1.3</hamcrest.version>
         <spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
         <javax.el-api.version>2.2.4</javax.el-api.version>
+        <powermock.version>1.6.5</powermock.version>
+        <hibernate.version>5.1.0.Final</hibernate.version>
+        <hibernate-search.version>5.5.4.Final</hibernate-search.version>
+        <struts2.version>2.5.1</struts2.version>
+        <struts2-jsr303-validation-plugin.version>1.0</struts2-jsr303-validation-plugin.version>
     </properties>
+
     <packaging>war</packaging>
 
     <build>
@@ -97,19 +103,8 @@
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-core</artifactId>
-            <version>2.5.1</version>
+            <version>${struts2.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-bean-validation-plugin</artifactId>
-            <version>2.5.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.umeshawasthi</groupId>
-            <artifactId>struts2-jsr303-validation-plugin</artifactId>
-            <version>1.0</version>
-        </dependency>
-
 
         <!--SPRING-->
         <dependency>
@@ -120,7 +115,7 @@
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-spring-plugin</artifactId>
-            <version>2.5.1</version>
+            <version>${struts2.version}</version>
         </dependency>
 
 
@@ -155,17 +150,17 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.1.0.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.1.0.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-orm</artifactId>
-            <version>5.5.4.Final</version>
+            <version>${hibernate-search.version}</version>
         </dependency>
 
 
@@ -189,6 +184,16 @@
             <groupId>javax.el</groupId>
             <artifactId>javax.el-api</artifactId>
             <version>${javax.el-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-bean-validation-plugin</artifactId>
+            <version>${struts2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.umeshawasthi</groupId>
+            <artifactId>struts2-jsr303-validation-plugin</artifactId>
+            <version>${struts2-jsr303-validation-plugin.version}</version>
         </dependency>
 
         <!--SECURITY-->
@@ -248,12 +253,17 @@
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <version>1.6.5</version>
+            <version>${powermock.version}</version>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
-            <version>1.6.5</version>
+            <version>${powermock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-junit-plugin</artifactId>
+            <version>${struts2.version}</version>
         </dependency>
 
 

@@ -22,6 +22,9 @@ public class UpdateUserAction extends ActionSupport {
     private String birthday;
     private String role;
 
+    public UpdateUserAction() {
+    }
+
     public UpdateUserAction(UserService service, RoleService roleService) {
         this.service = service;
         this.roleService = roleService;
@@ -113,7 +116,8 @@ public class UpdateUserAction extends ActionSupport {
 
     @Override
     public void validate() {
-        if (getPassword().length() < 6 || getPassword().length() > 50) addFieldError("password", "Password must be between 6 - 50 characters length");
+        if (getPassword().length() < 6 || getPassword().length() > 50)
+            addFieldError("password", "Password must be between 6 - 50 characters length");
         if (getEmail().length() < 4) addFieldError("email", "Too short email");
         if (getFirstName().length() > 50) addFieldError("firstName", "Too long first name");
         if (getLastName().length() > 50) addFieldError("lastName", "Too long first surename");

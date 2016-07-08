@@ -1,24 +1,18 @@
 package com.lofitskyi.config;
 
-import com.lofitskyi.service.RoleService;
-import com.lofitskyi.service.springdata.RoleServiceImpl;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaImpl;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.dbunit.DataSourceDatabaseTester;
-import org.dbunit.IDatabaseTester;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import
-        org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -83,7 +77,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public ReCaptcha reCaptcha(){
+    public ReCaptcha reCaptcha() {
         ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
         reCaptcha.setPublicKey("6LcrNiQTAAAAALVwnMRwwMjHQ2oG43EFglZnVQMQ");
         reCaptcha.setPrivateKey("6LcrNiQTAAAAAPqlUXKd74DI_OFhPr1PryF_Fbgl");

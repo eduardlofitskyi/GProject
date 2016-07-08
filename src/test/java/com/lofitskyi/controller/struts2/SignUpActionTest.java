@@ -15,11 +15,10 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.powermock.api.support.membermodification.MemberMatcher.method;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SignUpAction.class)
@@ -70,7 +69,7 @@ public class SignUpActionTest {
         when(roleService.findByName(USER_ROLE)).thenReturn(role);
         doCallRealMethod().when(user).setRole(role);
 
-        assertEquals(SUCCESS_RESPONSE,  actionSpy.execute());
+        assertEquals(SUCCESS_RESPONSE, actionSpy.execute());
 
         verify(roleService, only()).findByName(USER_ROLE);
         verify(service, only()).create(user);
@@ -84,7 +83,7 @@ public class SignUpActionTest {
         when(reCaptcha.checkAnswer(anyString(), anyString(), anyString())).thenReturn(reCaptchaResponse);
         when(reCaptchaResponse.isValid()).thenReturn(false);
 
-        assertEquals(INPUT_RESPONSE,  actionSpy.execute());
+        assertEquals(INPUT_RESPONSE, actionSpy.execute());
 
         verify(roleService, never()).findByName(anyString());
         verify(service, never()).create(any(User.class));

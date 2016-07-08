@@ -1,8 +1,8 @@
 package com.lofitskyi.service.springdata;
 
 import com.lofitskyi.entity.Role;
-import com.lofitskyi.repository.springdata.RoleRepository;
 import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.repository.springdata.RoleRepository;
 import com.lofitskyi.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

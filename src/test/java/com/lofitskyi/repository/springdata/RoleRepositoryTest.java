@@ -7,7 +7,6 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import com.lofitskyi.config.DatabaseConfig;
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.repository.PersistentException;
-import com.lofitskyi.repository.springdata.RoleRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +19,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DatabaseConfig.class)
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
 @WebAppConfiguration
 public class RoleRepositoryTest {
 

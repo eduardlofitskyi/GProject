@@ -11,7 +11,7 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.validation.Valid;
 
-public class SignUpAction extends ActionSupport{
+public class SignUpAction extends ActionSupport {
 
     UserService service;
     RoleService roleService;
@@ -68,7 +68,7 @@ public class SignUpAction extends ActionSupport{
 
         ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, recaptcha_challenge_field, recaptcha_response_field);
 
-        if (reCaptchaResponse.isValid()){
+        if (reCaptchaResponse.isValid()) {
 
             user.setBirthday(DateUtil.parseDate(birthday));
             user.setRole(roleService.findByName(user.getRole().getName()));

@@ -3,7 +3,6 @@ package com.lofitskyi.repository.jdbc;
 import com.lofitskyi.entity.Role;
 import com.lofitskyi.repository.PersistentException;
 import com.lofitskyi.repository.RoleDao;
-import com.lofitskyi.repository.jdbc.JdbcRoleRepository;
 import com.lofitskyi.utils.DataSourceTestAdapter;
 import org.dbunit.Assertion;
 import org.dbunit.IDatabaseTester;
@@ -55,7 +54,7 @@ public class RoleDaoTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenTryFoundNotPresentedRole(){
+    public void shouldThrowExceptionWhenTryFoundNotPresentedRole() {
 
         try {
             new JdbcRoleRepository(new DataSourceTestAdapter(tester)).findByName("NINJA");

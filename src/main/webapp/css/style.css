@@ -2,7 +2,7 @@ th {
     background-color: gray;
 }
 
-table{
+table {
     width: 100%;
 }
 
@@ -13,7 +13,7 @@ table, th, td {
     border: solid 1px black;
 }
 
-#container{
+#container {
     width: 80%;
     margin-left: 10%;
     margin-right: 10%;
@@ -25,36 +25,36 @@ table, th, td {
     margin: 0 auto;
 }
 
-#edit-container{
+#edit-container {
     width: 50%;
 }
 
-.block label{
+.block label {
     display: inline-block;
     width: 140px;
     text-align: left;
     margin-top: 5px;
 }
 
-.form-group{
+.form-group {
     display: inline-block;
     width: 49%;
 }
 
-.form-control{
+.form-control {
     width: 100%;
     margin-top: 5px;
 }
 
-.btn-submit{
+.btn-submit {
     float: right;
     margin: 10px;
 }
 
-.align-center{
+.align-center {
     text-align: center;
 }
 
-.align-right{
+.align-right {
     text-align: right;
 }

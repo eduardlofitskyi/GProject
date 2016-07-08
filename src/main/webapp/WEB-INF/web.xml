@@ -5,10 +5,10 @@
          version="3.0">
 
     <jsp-config>
-    <taglib>
-        <taglib-uri>http://tomcat.apache.org/example-taglib</taglib-uri>
-        <taglib-location>/WEB-INF/userstable.tld</taglib-location>
-    </taglib>
+        <taglib>
+            <taglib-uri>http://tomcat.apache.org/example-taglib</taglib-uri>
+            <taglib-location>/WEB-INF/userstable.tld</taglib-location>
+        </taglib>
     </jsp-config>
 
 

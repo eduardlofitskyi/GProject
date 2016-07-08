@@ -4,8 +4,6 @@ import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
 import com.lofitskyi.repository.PersistentException;
 import com.lofitskyi.repository.UserDao;
-import com.lofitskyi.repository.jdbc.JdbcRoleRepository;
-import com.lofitskyi.repository.jdbc.JdbcUserRepository;
 import com.lofitskyi.utils.DataSourceTestAdapter;
 import org.dbunit.Assertion;
 import org.dbunit.IDatabaseTester;
@@ -51,7 +49,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedEmail(){
+    public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedEmail() {
         try {
             new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByEmail("not_email");
             Assert.assertTrue("Should throw PersistentException", false);
@@ -68,7 +66,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedLogin(){
+    public void shouldThrowExceptionWhenTryFoundUserWithNotPresentedLogin() {
         try {
             new JdbcUserRepository(new DataSourceTestAdapter(tester)).findByLogin("not_login");
             Assert.assertTrue("Should throw PersistentException", false);
