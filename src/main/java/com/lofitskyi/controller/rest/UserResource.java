@@ -4,6 +4,7 @@ import com.lofitskyi.entity.User;
 import com.lofitskyi.repository.PersistentException;
 import com.lofitskyi.service.UserService;
 import org.hibernate.validator.constraints.Email;
+import org.jboss.resteasy.annotations.Form;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +18,17 @@ import java.util.List;
 
 @Component
 @Path("/user")
-public class UserRestService {
+public class UserResource {
 
     @Autowired
     UserService service;
+
+    public UserResource() {
+    }
+
+    public UserResource(UserService service){
+        this.service = service;
+    }
 
     @GET
     @Path("/all")

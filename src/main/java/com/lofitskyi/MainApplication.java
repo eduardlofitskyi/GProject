@@ -1,7 +1,7 @@
 package com.lofitskyi;
 
-import com.lofitskyi.controller.rest.RoleRestService;
-import com.lofitskyi.controller.rest.UserRestService;
+import com.lofitskyi.controller.rest.RoleResource;
+import com.lofitskyi.controller.rest.UserResource;
 
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
@@ -11,8 +11,8 @@ public class MainApplication extends Application {
     private Set<Object> singletons = new HashSet<>();
 
     public MainApplication() {
-        singletons.add(new UserRestService());
-        singletons.add(new RoleRestService());
+        singletons.add(new UserResource());
+        singletons.add(new RoleResource());
     }
     @Override
     public Set<Object> getSingletons() {

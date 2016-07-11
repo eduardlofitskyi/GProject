@@ -9,6 +9,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -72,6 +73,13 @@ public class DatabaseConfig {
         em.setJpaProperties(getHibernateProperties());
 
         return em;
+    }
+
+    @Bean
+    public SimpleJaxWsServiceExporter simpleJaxWsServiceExporter(){
+        SimpleJaxWsServiceExporter serviceExporter = new SimpleJaxWsServiceExporter();
+        serviceExporter.setBaseAddress("http://localhost:8888/ws/");
+        return serviceExporter;
     }
 
     private Properties getHibernateProperties() {
