@@ -30,6 +30,12 @@
         <javax.el-api.version>2.2.4</javax.el-api.version>
         <resteasy.version>3.0.17.Final</resteasy.version>
         <tomcat.version>8.5.3</tomcat.version>
+        <jaxws-rt.version>2.2.10</jaxws-rt.version>
+        <jaxws-spring.version>1.9</jaxws-spring.version>
+        <hibernate.version>5.1.0.Final</hibernate.version>
+        <hibernate-search-orm.version>5.5.4.Final</hibernate-search-orm.version>
+        <powermock.version>1.6.5</powermock.version>
+        <jboss-logging.version>3.3.0.Final</jboss-logging.version>
     </properties>
     <packaging>war</packaging>
 
@@ -128,12 +134,12 @@
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
-            <version>2.2.10</version>
+            <version>${jaxws-rt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jvnet.jax-ws-commons.spring</groupId>
             <artifactId>jaxws-spring</artifactId>
-            <version>1.9</version>
+            <version>${jaxws-spring.version}</version>
         </dependency>
         <!--SPRING-->
         <dependency>
@@ -173,17 +179,17 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.1.0.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.1.0.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-orm</artifactId>
-            <version>5.5.4.Final</version>
+            <version>${hibernate-search-orm.version}</version>
         </dependency>
 
 
@@ -231,7 +237,6 @@
             <version>${spring-security.version}</version>
         </dependency>
 
-
         <!--TEST-->
         <dependency>
             <groupId>org.dbunit</groupId>
@@ -266,19 +271,19 @@
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
-            <version>1.6.5</version>
+            <version>${powermock.version}</version>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <version>1.6.5</version>
+            <version>${powermock.version}</version>
         </dependency>
 
         <!--LOGGING-->
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
-            <version>3.3.0.Final</version>
+            <version>${jboss-logging.version}</version>
         </dependency>
 
     </dependencies>
