@@ -28,6 +28,8 @@
         <hamcrest.version>1.3</hamcrest.version>
         <spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
         <javax.el-api.version>2.2.4</javax.el-api.version>
+        <hibernate.version>5.1.0.Final</hibernate.version>
+        <hibernate-search-orm.version>5.5.4.Final</hibernate-search-orm.version>
     </properties>
     <packaging>war</packaging>
 
@@ -133,17 +135,17 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.1.0.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.1.0.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-orm</artifactId>
-            <version>5.5.4.Final</version>
+            <version>${hibernate-search-orm.version}</version>
         </dependency>
 
 
@@ -191,6 +193,12 @@
             <version>${spring-security.version}</version>
         </dependency>
 
+        <!--JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <version>2.8.0</version>
+        </dependency>
 
         <!--TEST-->
         <dependency>
