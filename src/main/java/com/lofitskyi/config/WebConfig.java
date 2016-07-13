@@ -61,4 +61,11 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("index");
     }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:8080", "http://localhost:63342")
+                .allowedMethods("PUT", "DELETE", "GET", "POST");
+    }
 }

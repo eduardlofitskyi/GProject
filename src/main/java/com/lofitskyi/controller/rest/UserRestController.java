@@ -4,22 +4,19 @@ import com.lofitskyi.entity.User;
 import com.lofitskyi.repository.PersistentException;
 import com.lofitskyi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/user")
+@RequestMapping("/rest/users")
 public class UserRestController {
 
     @Autowired
     private UserService service;
 
-    @RequestMapping(value = "/all")
+    @RequestMapping(method = RequestMethod.GET)
     public List<User> fetchAll() throws PersistentException {
         return service.findAll();
     }
@@ -29,13 +26,13 @@ public class UserRestController {
         return service.findById(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void save(User user) throws PersistentException, SQLException {
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void save(@RequestBody User user) throws PersistentException, SQLException {
         service.create(user);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public void save(@PathVariable Long id, User user) throws PersistentException {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void save(@PathVariable Long id, @RequestBody User user) throws PersistentException {
         service.update(user);
     }
 
