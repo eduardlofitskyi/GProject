@@ -1,0 +1,40 @@
+<script id="edit-template" type="text/template">
+    <form id="edit-form">
+
+        <h1>Edit <%= login%></h1>
+
+        <div>
+            <label for="edit_login">Username:</label>
+            <input id="edit_login" type="text" name="login" value="<%= login %>" readonly/>
+        </div>
+        <div>
+            <label for="edit_password">Password:</label>
+            <input id="edit_password" type="password" name="password" value="<%= password %>" required/>
+        </div>
+        <div>
+            <label for="edit_email">Email:</label>
+            <input id="edit_email" type="email" name="email" value="<%= email %>" required/>
+        </div>
+        <div>
+            <label for="edit_firstName">First Name:</label>
+            <input id="edit_firstName" type="text" name="firstName" value="<%= firstName %>" required/>
+        </div>
+        <div>
+            <label for="edit_lastName">Last Name:</label>
+            <input id="edit_lastName" type="text" name="lastName" value="<%= lastName %>" required/>
+        </div>
+        <div>
+            <label for="edit_birthday">Birthday:</label>
+            <input id="edit_birthday" type="date" name="birthday" value="<%= birthday %>" required/>
+        </div>
+        <div>
+            <label for="edit_role">Role:</label>
+            <select id="edit_role" size="1" name="role">
+                <option selected value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <input type="submit" value="Update User">
+        <button type="button" class="cancel">Cancel</button>
+    </form>
+</script>

@@ -17,7 +17,7 @@
     <title>Create new user</title>
 
     <link href="./css/style.css" rel="stylesheet" type="text/css">
-    <script src="./js/script.js"></script>
+    <script src="./js/main.js"></script>
 </head>
 <body>
 

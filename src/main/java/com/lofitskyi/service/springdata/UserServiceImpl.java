@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void create(User user) throws SQLException, PersistentException {
-        repository.saveAndFlush(user);
+    public User create(User user) throws SQLException, PersistentException {
+        return repository.saveAndFlush(user);
     }
 
     @Override

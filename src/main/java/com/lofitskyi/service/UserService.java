@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void create(User user) throws SQLException, PersistentException;
+    User create(User user) throws SQLException, PersistentException;
     void update(User user) throws PersistentException;
     void remove(User user) throws PersistentException;
 

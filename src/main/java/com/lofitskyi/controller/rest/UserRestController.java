@@ -1,7 +1,9 @@
 package com.lofitskyi.controller.rest;
 
+import com.lofitskyi.entity.Role;
 import com.lofitskyi.entity.User;
 import com.lofitskyi.repository.PersistentException;
+import com.lofitskyi.service.RoleService;
 import com.lofitskyi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,9 @@ public class UserRestController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private RoleService roleService;
+
     @RequestMapping(method = RequestMethod.GET)
     public List<User> fetchAll() throws PersistentException {
         return service.findAll();
@@ -27,12 +32,18 @@ public class UserRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public void save(@RequestBody User user) throws PersistentException, SQLException {
-        service.create(user);
+    public User save(@RequestBody User user) throws PersistentException, SQLException {
+        Role role = roleService.findByName(user.getRole().getName());
+        user.setRole(role);
+
+        return service.create(user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void save(@PathVariable Long id, @RequestBody User user) throws PersistentException {
+        Role role = roleService.findByName(user.getRole().getName());
+        user.setRole(role);
+
         service.update(user);
     }
 
@@ -40,6 +51,6 @@ public class UserRestController {
     public void destroy(@PathVariable Long id) throws PersistentException {
         User user = new User();
         user.setId(id);
-        service.update(user);
+        service.remove(user);
     }
 }

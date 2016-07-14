@@ -1,0 +1,13 @@
+<script type="text/template" id="userItem">
+    <td>{{login}}</td>
+    <td>{{firstName}}</td>
+    <td>{{lastName}}</td>
+    <td>{{birthday}}</td>
+    <td>{{role.name}}</td>
+    <td>
+        <a href="#users/{{id}}/edit" class="edit">Edit</a>
+
+        <a href="#users/{{id}}" class="delete"
+           onclick="confirm('Are you sure?')">Remove</a>
+    </td>
+</script>
