@@ -1,8 +1,10 @@
 package com.lofitskyi.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -72,6 +74,11 @@ public class DatabaseConfig {
         em.setJpaProperties(getHibernateProperties());
 
         return em;
+    }
+
+    @Bean
+    public BeanPostProcessor persistenceTranslation() {
+        return new PersistenceExceptionTranslationPostProcessor();
     }
 
     private Properties getHibernateProperties() {
