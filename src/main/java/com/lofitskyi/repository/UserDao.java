@@ -11,8 +11,6 @@ public interface UserDao {
     void update(User user) throws PersistentException;
     void remove(User user) throws PersistentException;
 
-    void removeById(User user) throws PersistentException;
-
     List<User> findAll() throws PersistentException;
     User findByLogin(String login) throws PersistentException;
     User findByEmail(String email) throws PersistentException;

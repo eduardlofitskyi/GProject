@@ -7,10 +7,33 @@
     <groupId>com.lofitskyi</groupId>
     <artifactId>gproject</artifactId>
     <version>1.0</version>
+
+    <properties>
+        <spring-security.version>4.1.0.RELEASE</spring-security.version>
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <jsp-api.version>2.0</jsp-api.version>
+        <jstl.version>1.2</jstl.version>
+        <spring-framework.version>4.3.0.RELEASE</spring-framework.version>
+        <h2.version>1.4.192</h2.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
+        <jta.version>1.1</jta.version>
+        <spring-data-jpa.version>1.10.2.RELEASE</spring-data-jpa.version>
+        <hibernate-core.version>5.2.0.Final</hibernate-core.version>
+        <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
+        <dbunit.version>2.5.2</dbunit.version>
+        <junit.version>4.12</junit.version>
+        <recaptcha4j.version>0.0.7</recaptcha4j.version>
+        <mockito.version>1.10.19</mockito.version>
+        <hamcrest.version>1.3</hamcrest.version>
+        <spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
+        <javax.el-api.version>2.2.4</javax.el-api.version>
+        <hibernate.version>5.1.0.Final</hibernate.version>
+        <hibernate-search-orm.version>5.5.4.Final</hibernate-search-orm.version>
+    </properties>
     <packaging>war</packaging>
 
     <build>
-
         <testOutputDirectory>target/test-classes</testOutputDirectory>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -54,55 +77,163 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <version>${javax.servlet-api.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.0</version>
+            <version>${jsp-api.version}</version>
         </dependency>
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
+        </dependency>
+
+        <!--WEB-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
+
+        <!--SPRING-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring-framework.version}</version>
         </dependency>
 
         <!--DB-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.192</version>
+            <version>${h2.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
+            <version>${commons-dbcp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>${jta.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring-framework.version}</version>
         </dependency>
 
         <!--JPA-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.2.0.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>${hibernate-search-orm.version}</version>
+        </dependency>
+
+
+        <!--VALIDATION-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.2.4.Final</version>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.tanesha.recaptcha4j</groupId>
+            <artifactId>recaptcha4j</artifactId>
+            <version>${recaptcha4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>${javax.el-api.version}</version>
+        </dependency>
+
+        <!--SECURITY-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+
+        <!--JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <version>2.8.0</version>
         </dependency>
 
         <!--TEST-->
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
-            <version>2.5.2</version>
+            <version>${dbunit.version}</version>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>${hamcrest.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.springtestdbunit</groupId>
+            <artifactId>spring-test-dbunit</artifactId>
+            <version>${spring-test-dbunit.version}</version>
+        </dependency>
+
+
+
 
     </dependencies>
 

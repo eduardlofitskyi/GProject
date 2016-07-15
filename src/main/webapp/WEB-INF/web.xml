@@ -24,6 +24,10 @@
         <servlet-name>default</servlet-name>
         <url-pattern>*.js</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.tag</url-pattern>
+    </servlet-mapping>
 
     <jsp-config>
     <taglib>
@@ -31,5 +35,7 @@
         <taglib-location>/WEB-INF/userstable.tld</taglib-location>
     </taglib>
     </jsp-config>
+
+
 
 </web-app>

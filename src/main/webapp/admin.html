@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<script type="text/template" id="userItem">
+    <td><%= login %></td>
+    <td><%= firstName %></td>
+    <td><%= lastName %></td>
+    <td><%= birthday %></td>
+    <td><%= role.name %></td>
+    <td>
+        <a href="#users/<%= id %>/edit" class="edit">Edit</a>
+
+        <a href="#users/<%= id %>" class="delete"
+           onclick="confirm('Are you sure?')">Remove</a>
+    </td>
+</script>
+
+<script id="edit-template" type="text/template">
+    <form id="edit-form">
+
+        <h1>Edit <%= login%></h1>
+
+        <div class="block">
+            <label for="edit_login">Username:</label>
+             <input id="edit_login" type="text" name="login" value="<%= login %>" readonly/>
+        </div>
+        <div class="block">
+            <label for="edit_password">Password:</label>
+             <input id="edit_password" type="password" name="password" value="<%= password %>" required/>
+        </div>
+        <div class="block">
+            <label for="edit_email">Email:</label>
+             <input id="edit_email" type="email" name="email" value="<%= email %>" required/>
+        </div>
+        <div class="block">
+            <label for="edit_firstName">First Name:</label>
+             <input id="edit_firstName" type="text" name="firstName" value="<%= firstName %>" required/>
+        </div>
+        <div class="block">
+            <label for="edit_lastName">Last Name:</label>
+             <input id="edit_lastName" type="text" name="lastName" value="<%= lastName %>" required/>
+        </div>
+        <div class="block">
+            <label for="edit_birthday">Birthday:</label>
+             <input id="edit_birthday" type="date" name="birthday" value="<%= birthday %>" required/>
+        </div>
+        <div class="block">
+            <label for="edit_role">Role:</label>
+            <select id="edit_role" size="1" name="role">
+                <option selected value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <input type="submit" value="Update User">
+        <button type="button" class="cancel">Cancel</button>
+    </form>
+</script>
+
+<script id="add-template" type="text/template">
+    <form id="add-form">
+
+        <h1>Add New</h1>
+
+        <div class="block">
+            <label for="add_login">Username:</label>
+            <input id="add_login" type="text" name="login" required/>
+        </div>
+        <div class="block">
+            <label for="add_password">Password:</label>
+            <input id="add_password" type="password" name="password" required/>
+        </div>
+        <div class="block">
+            <label for="add_email">Email:</label>
+            <input id="add_email" type="email" name="email" required/>
+        </div>
+        <div class="block">
+            <label for="add_firstName">First Name:</label>
+            <input id="add_firstName" type="text" name="firstName" required/>
+        </div>
+        <div class="block">
+            <label for="add_lastName">Last Name:</label>
+            <input id="add_lastName" type="text" name="lastName" required/>
+        </div>
+        <div class="block">
+            <label for="add_birthday">Birthday:</label>
+            <input id="add_birthday" type="date" name="birthday" required/>
+        </div>
+        <div class="block">
+            <label for="add_role">Role:</label>
+            <select id="add_role" size="1" name="role">
+                <option selected value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <input type="submit" value="Add User">
+        <button type="button" class="cancel">Cancel</button>
+    </form>
+</script>
+
+<div id="header">
+    <a href="/logout">LOG OUT</a>
+</div>
+
+<div id="container">
+    <div class="half">
+        <button id="add_btn" onclick="vent.trigger('user:add')">Add New User</button>
+        <table id="user-table">
+                <thead>
+                <tr>
+                    <td>Login</td>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                    <td>Birthday</td>
+                    <td>Role</td>
+                    <td>Action</td>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="form-content half"></div>
+    </div>
+
+<script src="lib/jquery-1.7.2.min.js"></script>
+    <script src="lib/underscore-min.js"></script>
+    <script src="lib/backbone-min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+
+    <script src="js/main.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/models/user.js"></script>
+    <script src="js/views/userItem.js"></script>
+    <script src="js/views/userTable.js"></script>
+    <script src="js/views/globalApp.js"></script>
+    <script src="js/views/add.js"></script>
+    <script src="js/views/edit.js"></script>
+    <script src="js/collections/users.js"></script>
+    <script src="js/router/router.js"></script>
+
+    <script>
+        new App.Router();
+        Backbone.history.start();
+
+        App.users = new App.Collections.Users();
+        App.users.fetch().then(function () {
+            new App.Views.App({ collection: App.users});
+        });
+    </script>
+</body>
+</html>

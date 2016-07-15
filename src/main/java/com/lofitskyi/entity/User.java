@@ -59,7 +59,7 @@ public class User {
     private Date birthday;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
@@ -161,10 +161,5 @@ public class User {
 
         return id.equals(user.id);
 
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
     }
 }

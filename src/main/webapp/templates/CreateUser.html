@@ -1,0 +1,40 @@
+<script id="add-template" type="text/template">
+    <form id="add-form">
+
+        <h1>Add New</h1>
+
+        <div>
+            <label for="add_login">Username:</label>
+            <input id="add_login" type="text" name="login" required/>
+        </div>
+        <div>
+            <label for="add_password">Password:</label>
+            <input id="add_password" type="password" name="password" required/>
+        </div>
+        <div>
+            <label for="add_email">Email:</label>
+            <input id="add_email" type="email" name="email" required/>
+        </div>
+        <div>
+            <label for="add_firstName">First Name:</label>
+            <input id="add_firstName" type="text" name="firstName" required/>
+        </div>
+        <div>
+            <label for="add_lastName">Last Name:</label>
+            <input id="add_lastName" type="text" name="lastName" required/>
+        </div>
+        <div>
+            <label for="add_birthday">Birthday:</label>
+            <input id="add_birthday" type="date" name="birthday" required/>
+        </div>
+        <div>
+            <label for="add_role">Role:</label>
+            <select id="add_role" size="1" name="role">
+                <option selected value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <input type="submit" value="Add User">
+        <button type="button" class="cancel">Cancel</button>
+    </form>
+</script>
