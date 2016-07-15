@@ -6,14 +6,14 @@ App.Router = Backbone.Router.extend({
     },
 
     index: function () {
-    
+        //NOP
     },
 
     editUser: function () {
-
+        //NOP
     },
 
     addUser: function () {
-
+        //NOP
     }
 });

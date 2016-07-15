@@ -6,6 +6,8 @@ import com.lofitskyi.repository.PersistentException;
 import com.lofitskyi.service.RoleService;
 import com.lofitskyi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -24,6 +26,11 @@ public class UserRestController {
     @RequestMapping(method = RequestMethod.GET)
     public List<User> fetchAll() throws PersistentException {
         return service.findAll();
+    }
+
+    @RequestMapping(value = "/page/{id}", method = RequestMethod.GET)
+    public Page<User> fetchAll(@PathVariable Integer id) throws PersistentException {
+        return service.findAllPagable(id);
     }
 
     @RequestMapping(value = "/{id}")
@@ -52,5 +59,11 @@ public class UserRestController {
         User user = new User();
         user.setId(id);
         service.remove(user);
+    }
+
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Something went wrong. Try again")
+    @ExceptionHandler(PersistentException.class)
+    public void exceptionHandler(){
+        //NOP
     }
 }

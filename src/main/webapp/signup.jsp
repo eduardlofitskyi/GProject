@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <title>Sign up</title>
     <link href="./css/style.css" rel="stylesheet" type="text/css">
-    <script src="./js/main.js"></script>
+    <script src="./js/utils.js"></script>
     <script src="https://www.google.com/recaptcha/api.js"></script>
 </head>
 <body>

@@ -30,6 +30,10 @@ table, th, td {
     width: 60%;
 }
 
+#add_btn{
+    float: right;
+}
+
 .half{
     width: 45%;
     display: inline-block;

@@ -2,6 +2,7 @@ package com.lofitskyi.service;
 
 import com.lofitskyi.entity.User;
 import com.lofitskyi.repository.PersistentException;
+import org.springframework.data.domain.Page;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,6 +14,9 @@ public interface UserService {
     void remove(User user) throws PersistentException;
 
     List<User> findAll() throws PersistentException;
+
+    Page<User> findAllPagable(int pageNumber) throws PersistentException;
+
     User findByLogin(String login) throws PersistentException;
     User findByEmail(String email) throws PersistentException;
     User findById(Long id) throws PersistentException;
